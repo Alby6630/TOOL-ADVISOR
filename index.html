@@ -28,25 +28,6 @@
     /* Box consigliato */
     .vevor-rec{border:2px solid #2e7d32;background:#eef6f0;padding:18px;border-radius:12px;}
     .vevor-rec h3{margin:0 0 10px 0;color:#2e7d32;}
-    /* Assistente scelta (chat) */
-    .advisor{margin:16px 0 0 0;border:1px solid #e1e1e1;background:#fafafa;border-radius:14px;padding:14px;}
-    .advisor-head{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;}
-    .advisor-badge{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#eef6f0;border:1px solid #cfe6d5;flex:0 0 auto;}
-    .advisor-title{margin:0;font-size:18px;}
-    .advisor-sub{margin:2px 0 0 0;opacity:.85;font-size:13px;}
-    .chatlog{height:260px;overflow:auto;background:#fff;border:1px solid #e7e7e7;border-radius:12px;padding:10px;}
-    .bubble{max-width:86%;padding:10px 12px;border-radius:14px;margin:8px 0;line-height:1.35;font-size:14px;}
-    .me{margin-left:auto;background:#eaf2ff;border:1px solid #d6e6ff;}
-    .bot{margin-right:auto;background:#f5f7f5;border:1px solid #e3e7e3;}
-    .meta{font-size:12px;opacity:.7;margin-top:6px;}
-    .chatrow{display:flex;gap:10px;margin-top:10px;}
-    .chatrow input{flex:1;padding:10px 12px;border-radius:12px;border:1px solid #d8d8d8;outline:none;}
-    .chatrow button{padding:10px 14px;border-radius:12px;border:0;background:#2e7d32;color:#fff;font-weight:700;cursor:pointer;}
-    .chatrow button:hover{opacity:.92;}
-    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
-    .chip{border:1px solid #ddd;background:#fff;border-radius:999px;padding:8px 10px;font-size:13px;cursor:pointer;}
-    .chip:hover{background:#f3f3f3;}
-
 
     @media (max-width: 900px){
       .vevor-wrap{flex-direction:column;}
@@ -55,7 +36,846 @@
       .vevor-media{max-width:100%;flex:0 0 auto;}
       .vevor-media img{max-width:260px;margin:6px auto 0 auto;}
     }
-  </style>
+
+    /* bianco caldo, coerente con arancio */
+  border: 1px solid #e5e7eb;      /* bordo pulito */
+  border-left: 6px solid #e65100; /* accento VEVOR */
+  border-radius: 12px;
+  overflow: hidden;
+
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: grid-template-rows .65s ease, opacity .35s ease, transform .45s ease;
+}
+/* ===== Sezione informativa separata (stile VEVOR) ===== */
+.vevor-info-section{max-width:1100px;margin:24px auto;background:#f3f4f6;padding:22px;border-radius:18px;box-shadow:0 10px 30px rgba(15,23,42,0.06);}
+
+
+/* ===== Box Trasparenza Affiliazione ===== */
+.vevor-transparency{
+  background:#ffffff;
+  border:1px solid #e5e7eb;
+  border-left:6px solid #2e7d32;
+  border-radius:14px;
+  padding:14px 16px;
+  margin:14px 0;
+}
+.vevor-transparency h3{
+  margin:0 0 6px 0;
+  color:#14532d;
+}
+.vevor-transparency p{
+  margin:0;
+  color:#1f2937;
+}
+.vevor-transparency .vevor-chip{
+  display:inline-block;
+  background:#ecfdf5;
+  border:1px solid #bbf7d0;
+  color:#14532d;
+  font-weight:800;
+  font-size:12px;
+  padding:4px 8px;
+  border-radius:999px;
+  margin-bottom:10px;
+}
+
+
+
+/* Card FAQ */
+.vevor-faq details{
+  background: linear-gradient(180deg, #ffedd5 0%, #fed7aa 100%); /* arancione chiaro, soft */
+  border: 1px solid #fdba74;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 12px 0;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+  transition: box-shadow .25s ease, transform .25s ease, border-color .25s ease;
+  position: relative;
+}
+
+/* Hover + focus */
+.vevor-faq details:hover{
+  border-color:#fb923c;
+  box-shadow: 0 12px 26px rgba(15,23,42,0.10);
+  transform: translateY(-1px);
+}
+
+.vevor-faq summary{
+  list-style:none;
+  cursor:pointer;
+  font-weight: 850;
+  color:#0f172a; /* testo domanda nero */
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  user-select:none;
+  outline:none;
+}
+
+.vevor-faq summary::-webkit-details-marker{display:none;}
+
+.vevor-faq summary .q{
+  font-size:16px;
+  line-height:1.35;
+}
+
+/* Chevron più “premium” */
+.vevor-faq summary .chev{
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #0f172a;
+  border-bottom: 2px solid #0f172a;
+  transform: rotate(45deg);
+  transition: transform .38s ease;
+  margin-left:auto;
+  margin-top: 6px;
+  opacity: 0.85;
+}
+
+/* Stato aperto: cornice leggermente più decisa */
+.vevor-faq details[open]{
+  border-color:#f97316;
+  box-shadow: 0 14px 30px rgba(15,23,42,0.12);
+}
+
+/* Chevron ruota */
+.vevor-faq details[open] summary .chev{
+  transform: rotate(-135deg);
+}
+
+/* Risposta bianca (tendina lenta + fade) */
+
+
+.vevor-faq details[open] .a{
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Accessibilità: focus visibile sul summary */
+.vevor-faq summary:focus-visible{
+  outline: 3px solid rgba(230,81,0,0.35);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+/* Featured FAQ (prima): più elegante, non aggressiva */
+.vevor-faq details.vevor-faq-featured{border:1px solid #d1fae5;border-left:6px solid #2e7d32;}
+
+
+/* ===== POLISH UI (pulita + professionale) ===== */
+:root{
+  --ink:#0f172a;
+  --text:#1f2937;
+  --muted:#475569;
+  --line:#e5e7eb;
+  --bg:#f7f8fa;
+  --card:#ffffff;
+  --brand:#e65100;
+  --brand-2:#fb923c;
+  --success:#2e7d32;
+  --soft-orange:#fff7ed;
+}
+
+section{max-width:1100px;margin:24px auto;background:#f3f4f6;padding:22px;border-radius:18px;box-shadow:0 10px 30px rgba(15,23,42,0.06);}
+
+.vevor-main h1{
+  color:var(--ink);
+  font-size:30px;
+  line-height:1.15;
+  letter-spacing:-0.4px;
+  margin:6px 0 14px;
+}
+
+.vevor-main p{color:var(--text);}
+
+.vevor-wrap{gap:26px;}
+
+.vevor-side{
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
+  border:1px solid var(--line);
+  border-left:5px solid var(--success);
+  border-radius:16px;
+  box-shadow: 0 10px 26px rgba(15,23,42,0.06);
+}
+
+.vevor-side h3{
+  color:var(--ink);
+  font-size:16px;
+  margin:0 0 10px;
+}
+
+.vevor-h2{
+  border-left:6px solid var(--success);
+  padding-left:12px;
+  color:var(--ink);
+}
+
+.vevor-box{
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:16px;
+}
+
+.vevor-card{
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--card);
+  padding:16px;
+  margin:16px 0;
+  box-shadow: 0 10px 26px rgba(15,23,42,0.06);
+}
+
+.vevor-row{gap:16px;}
+
+.vevor-media img{
+  border-radius:14px;
+  box-shadow: 0 10px 22px rgba(15,23,42,0.10);
+}
+
+.vevor-procon{
+  background:#ffffff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px 14px;
+}
+
+.vevor-procon ul{margin:0; padding-left:18px;}
+.vevor-procon li{margin:8px 0; color:var(--text);}
+
+.vevor-rec{
+  border-radius:16px;
+  background: linear-gradient(180deg, #ecfdf5 0%, #ffffff 100%);
+  border:1px solid #bbf7d0;
+  box-shadow: 0 10px 24px rgba(34,197,94,0.10);
+}
+.vevor-rec h3{color:#166534;}
+
+.vevor-btn{
+  background: linear-gradient(180deg, var(--brand) 0%, #cc4a00 100%);
+  border: 1px solid rgba(255,255,255,0.22);
+  box-shadow: 0 10px 20px rgba(230,81,0,0.20);
+  border-radius:12px;
+  padding:11px 16px;
+}
+.vevor-btn:hover{opacity:1; filter:brightness(1.03); transform: translateY(-1px);}
+.vevor-btn{transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;}
+.vevor-btn:active{transform: translateY(0);}
+
+hr{
+  border:0;
+  border-top:1px solid var(--line);
+  margin:22px 0;
+}
+
+/* Sezione informativa arancione: più “pro” */
+.vevor-info-section{max-width:1100px;margin:24px auto;background:#f3f4f6;padding:22px;border-radius:18px;box-shadow:0 10px 30px rgba(15,23,42,0.06);}
+
+/* Liste generiche più pulite */
+.vevor-info-section ul,
+.vevor-box ul{
+  margin:0;
+  padding-left:18px;
+}
+.vevor-info-section li,
+.vevor-box li{
+  margin:10px 0;
+}
+
+/* Trasparenza box: più premium */
+.vevor-transparency{
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border:1px solid var(--line);
+  border-left:6px solid var(--success);
+  border-radius:16px;
+  padding:16px 16px;
+  box-shadow: 0 10px 22px rgba(15,23,42,0.06);
+}
+.vevor-transparency h3{color:var(--ink); font-size:16px;}
+.vevor-transparency p{color:var(--text); line-height:1.65;}
+
+/* Note più leggibile */
+.vevor-note{
+  color:var(--muted);
+  background:#ffffff;
+  border:1px dashed #d1d5db;
+  padding:12px 14px;
+  border-radius:14px;
+}
+
+/* Mobile tweaks */
+@media (max-width: 900px){
+  section{padding:18px;}
+  .vevor-main h1{font-size:26px;}
+  .vevor-card{padding:14px;}
+  .vevor-procon{padding:12px;}
+}
+
+
+
+
+/* ===== FAQ stile pulito: bianco panna + tonalità verdi ===== */
+.vevor-faq{
+  margin-top:18px;
+}
+
+/* Box domanda */
+.vevor-faq details{
+  background: linear-gradient(180deg, #fffdf8 0%, #f6f9f4 100%);
+  border:1px solid #d1fae5;
+  border-left:6px solid #2e7d32;
+  border-radius:16px;
+  padding:16px 18px;
+  margin:14px 0;
+  box-shadow:0 10px 28px rgba(15,23,42,0.08);
+  transition:box-shadow .25s ease, transform .25s ease, background .25s ease;
+}
+
+.vevor-faq details:hover{
+  background: linear-gradient(180deg, #ffffff 0%, #ecfdf5 100%);
+  box-shadow:0 16px 36px rgba(15,23,42,0.12);
+  transform:translateY(-2px);
+}
+
+/* Domanda */
+.vevor-faq summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  font-weight:800;
+  color:#0f172a;
+}
+
+.vevor-faq summary::-webkit-details-marker{display:none;}
+
+.vevor-faq summary .q{
+  font-size:16.5px;
+  line-height:1.35;
+}
+
+/* Chevron verde */
+.vevor-faq summary .chev{
+  width:11px;
+  height:11px;
+  border-right:3px solid #2e7d32;
+  border-bottom:3px solid #2e7d32;
+  transform:rotate(45deg);
+  transition:transform .45s ease;
+  margin-left:auto;
+  margin-top:6px;
+}
+
+/* Aperto */
+.vevor-faq details[open] summary .chev{
+  transform:rotate(-135deg);
+}
+
+/* Risposta */
+
+
+.vevor-faq details[open] .a{
+  grid-template-rows:1fr;
+  opacity:1;
+  transform:translateY(0);
+}
+
+
+/* Hover: bordo verde su tutte le FAQ */
+.vevor-faq details:hover{
+  border-color:#2e7d32;
+}
+
+
+/* FAQ risposte senza contenitore */
+.vevor-faq .a{
+  margin-top:10px;
+  background:transparent;
+  border:none;
+  border-left:none;
+  border-radius:0;
+  overflow:hidden;
+
+  display:grid;
+  grid-template-rows:0fr;
+  opacity:0;
+  transform:translateY(-4px);
+  transition:grid-template-rows .5s ease, opacity .35s ease, transform .5s ease;
+}
+
+.vevor-faq .a-inner{
+  padding:4px 2px 8px 2px;
+  color:#1f2937;
+  font-size:15.6px;
+  line-height:1.65;
+}
+
+
+/* FAQ aperta: bordo verde acceso */
+.vevor-faq details[open]{
+  border-color:#1b5e20; /* verde acceso */
+  box-shadow:0 14px 30px rgba(27,94,32,0.25);
+}
+
+
+/* ===== Contenitore sezione FAQ (tema verde) ===== */
+.vevor-faq-section{max-width:1100px;margin:24px auto;background:#f3f4f6;padding:22px;border-radius:18px;box-shadow:0 10px 30px rgba(15,23,42,0.06);}
+
+.vevor-faq-section .vevor-h2{
+  margin-top: 0;
+}
+
+
+/* ===== Advisor Color Enhancements ===== */
+:root{
+  --advisor-bg: #f3f4f6;
+  --advisor-card: #ffffff;
+  --advisor-accent: #e65100;   /* VEVOR orange */
+  --advisor-accent-soft: #fff3e8;
+  --advisor-green: #2e7d32;
+  --advisor-green-soft: #eef6f0;
+  --advisor-blue-soft: #eef3fb;
+}
+
+/* Section background alternation */
+.vevor-info-section{
+  background: linear-gradient(180deg, var(--advisor-bg) 0%, #ffffff 100%);
+}
+
+/* Highlight key advisor boxes */
+.vevor-box{
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  border-left: 4px solid var(--advisor-accent);
+}
+
+/* Product cards accent */
+.vevor-card{
+  background: linear-gradient(180deg, #ffffff 0%, #fdfdfd 100%);
+  border-top: 3px solid var(--advisor-accent);
+}
+
+/* “Ideale per / Da evitare se” visual boost */
+.vevor-procon{
+  background: var(--advisor-accent-soft);
+  border-left: 4px solid var(--advisor-accent);
+}
+
+/* Sintesi decisionale emphasis */
+.vevor-info-section .vevor-h2{
+  color: #1f2937;
+}
+.vevor-info-section .vevor-box{
+  background: linear-gradient(180deg, var(--advisor-green-soft) 0%, #ffffff 100%);
+  border-left: 4px solid var(--advisor-green);
+}
+
+/* Buttons calmer but visible */
+.vevor-btn{
+  background: linear-gradient(180deg, #ff7a1a 0%, #e65100 100%);
+  box-shadow: 0 6px 18px rgba(230,81,0,0.25);
+}
+
+/* Subtle separators */
+hr{
+  border-top: 1px dashed #d1d5db;
+}
+
+
+/* ===== Stronger VEVOR Orange for Product Containers ===== */
+.vevor-card{
+  border: 2px solid rgba(230,81,0,0.35);
+  border-top: 5px solid #e65100;
+  box-shadow: 0 10px 26px rgba(230,81,0,0.15);
+}
+
+.vevor-card:hover{
+  box-shadow: 0 16px 36px rgba(230,81,0,0.22);
+  transform: translateY(-2px);
+}
+
+/* Product title accent */
+.vevor-card .vevor-h2{
+  border-left: 6px solid #e65100;
+}
+
+
+/* ===== Normalize product card borders + orange hover ===== */
+.vevor-card{
+  border: 5px solid #e65100;            /* same thickness on all sides */
+  border-radius: 16px;
+  background: linear-gradient(180deg, #ffffff 0%, #fdfdfd 100%);
+  transition: background .25s ease, box-shadow .25s ease, transform .2s ease;
+}
+
+.vevor-card:hover{
+  background: linear-gradient(180deg, #fff3e8 0%, #ffe1cc 100%); /* VEVOR orange soft */
+  box-shadow: 0 18px 40px rgba(230,81,0,0.30);
+  transform: translateY(-2px);
+}
+
+/* Keep text readable on hover */
+.vevor-card:hover p,
+.vevor-card:hover li{
+  color:#1f2937;
+}
+
+/* Product title accent consistent */
+.vevor-card .vevor-h2{
+  border-left: 6px solid #e65100;
+}
+
+
+/* ===== Final container for all sections after products ===== */
+.vevor-advisor-wrapper{
+  border: 5px solid #e65100;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  margin-top: 28px;
+}
+.vevor-advisor-wrapper:hover{
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  transform:none;
+}
+
+
+/* ===== TYPOGRAPHY UPGRADE ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;600;700&display=swap');
+
+:root{
+  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+}
+
+/* Global */
+body{
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  color: #1f2937;
+}
+
+/* Headings */
+.vevor-main h1{
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.vevor-h2{
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+/* Product titles stronger */
+.vevor-card .vevor-h2{
+  font-weight: 700;
+}
+
+/* Body text */
+p{ font-size: 15.8px; }
+li{ font-size: 15.6px; }
+
+/* Buttons */
+.vevor-btn{
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* Notes */
+.vevor-note{
+  font-size: 14.5px;
+  font-style: italic;
+}
+
+
+/* ===== Chi è VEVOR – visual enhancement ===== */
+.vevor-about{
+  background: linear-gradient(180deg, #eef6f0 0%, #ffffff 100%);
+  border: 4px solid #2e7d32;
+  border-left: 6px solid #e65100;
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 12px 26px rgba(34,197,94,0.12);
+}
+
+.vevor-about p{
+  color:#1f2937;
+}
+
+.vevor-about strong{
+  color:#14532d;
+}
+
+
+/* ===== Stronger VEVOR Orange Hover for Products ===== */
+.vevor-card:hover{
+  background: linear-gradient(180deg, #ffe1cc 0%, #ffb380 100%); /* more intense orange */
+  box-shadow: 0 20px 44px rgba(230,81,0,0.45);
+  transform: translateY(-3px);
+}
+
+/* Keep contrast high */
+.vevor-card:hover h2,
+.vevor-card:hover p,
+.vevor-card:hover li{
+  color:#1f2937;
+}
+
+
+/* ===== Product accordion (tool-advisor style) ===== */
+.vevor-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:0;
+  cursor:pointer;
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:700;
+  background: rgba(230,81,0,0.10);
+  color:#b33f00;
+  box-shadow: inset 0 0 0 2px rgba(230,81,0,0.25);
+}
+.vevor-toggle:hover{ background: rgba(230,81,0,0.16); }
+.vevor-toggle:focus{ outline: 3px solid rgba(230,81,0,0.35); outline-offset: 2px; }
+
+/* Make hover background apply only when closed, so open cards remain readable */
+.vevor-card.open:hover{
+  background: linear-gradient(180deg, #ffffff 0%, #fdfdfd 100%);
+  transform:none;
+  box-shadow: 0 14px 34px rgba(230,81,0,0.22);
+}
+
+
+/* ===== Image slider for product gallery ===== */
+.vevor-slider{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:8px;
+}
+.vevor-slider img{
+  flex:0 0 auto;
+  width:260px;
+  max-width:85%;
+  border-radius:12px;
+  scroll-snap-align:center;
+  box-shadow:0 8px 22px rgba(0,0,0,0.15);
+}
+.vevor-slider::-webkit-scrollbar{
+  height:8px;
+}
+.vevor-slider::-webkit-scrollbar-thumb{
+  background:#e65100;
+  border-radius:10px;
+}
+
+
+/* ===== CTA placement inside accordion ===== */
+.vevor-cta{ text-align:left; }
+.vevor-cta .vevor-btn{ display:inline-block; margin-top:6px; }
+
+
+/* ===== Dual CTA behavior (outside + inside accordion) ===== */
+.vevor-card .vevor-cta-primary{
+  margin-top:14px;
+}
+
+.vevor-card.open .vevor-cta-primary{
+  display:none; /* hide primary CTA when accordion is open */
+}
+
+
+/* Ensure primary CTA visible when card closed */
+.vevor-cta-primary{ display:block; }
+.vevor-card.open .vevor-cta-primary{ display:none; }
+
+
+/* ===== Smooth accordion animation ===== */
+.vevor-more{
+  display:block;              /* keep in flow for animation */
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height .35s ease, opacity .25s ease;
+}
+
+.vevor-card.open .vevor-more{
+  max-height: 2000px;         /* large enough for content */
+  opacity: 1;
+}
+
+.vevor-toggle{
+  transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+
+/* ===== Stronger CTA clarity ===== */
+.vevor-btn{
+  background: linear-gradient(180deg,#ff7a18,#e65100);
+  color:#fff;
+  font-weight:700;
+  padding:12px 18px;
+  border-radius:10px;
+  box-shadow:0 10px 24px rgba(230,81,0,0.35);
+}
+.vevor-btn:hover{
+  background: linear-gradient(180deg,#ff8c3a,#ff6a00);
+}
+
+/* CTA helper text */
+.vevor-cta-note{
+  font-size:14px;
+  color:#6b7280;
+  margin-top:6px;
+}
+
+/* ===== Ulteriori info button styling ===== */
+.vevor-toggle{
+  background: rgba(46,125,50,0.12);
+  color:#1b5e20;
+  font-weight:700;
+  border-radius:10px;
+  padding:10px 14px;
+  box-shadow: inset 0 0 0 2px rgba(46,125,50,0.35);
+}
+.vevor-toggle:hover{
+  background: rgba(46,125,50,0.18);
+}
+
+
+/* ===== Ulteriori info button contrast fix ===== */
+.vevor-toggle{
+  background: rgba(30,64,175,0.12); /* blue slate */
+  color:#1e3a8a;
+  box-shadow: inset 0 0 0 2px rgba(30,64,175,0.45);
+}
+
+.vevor-toggle:hover{
+  background: rgba(30,64,175,0.20);
+  color:#1e3a8a;
+}
+
+/* Keep strong contrast even on orange card hover */
+.vevor-card:hover .vevor-toggle{
+  background: rgba(255,255,255,0.85);
+  color:#1e3a8a;
+  box-shadow: inset 0 0 0 2px #1e3a8a;
+}
+
+
+/* ===== Spacing between advisor sections ===== */
+.vevor-section{
+  margin-top:32px;
+}
+
+.vevor-section + .vevor-section{
+  margin-top:36px;
+}
+
+
+/* ===== Uniform section spacing (like 'In sintesi') ===== */
+.vevor-sections-wrapper > section{
+  margin-top:40px;
+}
+
+.vevor-sections-wrapper > section:first-child{
+  margin-top:0;
+}
+
+/* =========================================================
+   AI ADVISOR — UI “chat” (senza rimuovere elementi esistenti)
+   ========================================================= */
+.ai-chatlog{
+  margin-top:14px;
+  background:#ffffff;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:12px;
+  max-width:860px;
+  height:260px;
+  overflow:auto;
+  box-shadow:0 10px 24px rgba(15,23,42,0.06);
+}
+.ai-bubble{
+  max-width:85%;
+  padding:10px 12px;
+  border-radius:14px;
+  margin:8px 0;
+  line-height:1.5;
+  font-size:15px;
+  border:1px solid #e5e7eb;
+}
+.ai-user{
+  margin-left:auto;
+  background:#eef2ff;
+  border-color:#dbeafe;
+}
+.ai-bot{
+  margin-right:auto;
+  background:#f8fafc;
+}
+.ai-meta{
+  font-size:12.5px;
+  opacity:.7;
+  margin-top:6px;
+}
+.ai-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+  max-width:860px;
+}
+.ai-chip{
+  border:1px solid #e5e7eb;
+  background:#ffffff;
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:13.5px;
+  cursor:pointer;
+  transition: transform .15s ease, background .15s ease;
+}
+.ai-chip:hover{
+  background:#f3f4f6;
+  transform: translateY(-1px);
+}
+.ai-row{
+  margin-top:10px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  max-width:860px;
+}
+.ai-row .vevor-btn{
+  margin:0;
+}
+.ai-ghost{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+  background:#ffffff;
+  cursor:pointer;
+  font-weight:700;
+  color:#0f172a;
+}
+.ai-ghost:hover{ background:#f3f4f6; }
+.ai-ghost:focus{ outline: 3px solid rgba(230,81,0,0.35); outline-offset: 2px; }
+</style>
 
   <div class="vevor-wrap">
 
@@ -64,14 +884,74 @@
 
       <h1>Quale motosega scegliere? Guida alle motoseghe VEVOR da 25 a 62 cc</h1>
 
-      <div class="vevor-box">
-        <p style="margin:0;">
-          Scegliere la motosega giusta non è sempre facile: modelli, potenza, alimentazione e caratteristiche tecniche possono creare confusione, soprattutto se è la prima volta che ti avvicini a questo tipo di attrezzo. In questa guida scoprirai quali aspetti considerare per trovare la motosega perfetta per le tue esigenze, sia che tu sia un hobbista, un agricoltore o un professionista del settore forestale.
-        </p>
-      </div>
 
-      <!-- 25 CC CARD -->
-      <div class="vevor-card">
+<h2 class="vevor-h2">Chi è VEVOR</h2>
+
+<div class=\"vevor-box vevor-about\">
+  <p style="margin-top:0;">
+    <strong>VEVOR</strong> è un marchio internazionale specializzato in attrezzature e utensili per
+    officina, casa, giardinaggio e lavori pratici. Nel tempo si è fatto conoscere per un approccio concreto:
+    prodotti progettati per essere <strong>robusti, affidabili e semplici da usare</strong>.
+  </p>
+
+  <p>
+    Un punto di forza del brand è l’attenzione a <strong>materiali e solidità costruttiva</strong>:
+    strutture resistenti, componenti pensate per durare e soluzioni pratiche orientate all’utilizzo reale.
+  </p>
+
+  <p style="margin-bottom:0;">
+    In altre parole, VEVOR punta a offrire <strong>buona qualità senza spendere troppo</strong>,
+    con un rapporto <strong>dotazione/prezzo</strong> spesso vantaggioso rispetto alla fascia di costo.
+    In questa guida trovi i modelli ordinati per utilizzo e cilindrata, così puoi scegliere rapidamente quello più adatto al tuo lavoro.
+  </p>
+</div>
+
+      
+
+      
+<div class="vevor-info-section vevor-section" id="ai-advisor">
+  <h2 class="vevor-h2">Hai un dubbio? Chiedi un consiglio</h2>
+  <div class="vevor-box" style="background:linear-gradient(180deg,#fff7f0 0%, #ffffff 100%);border-left:6px solid #e65100;">
+    <p style="margin-top:0;">
+      Non sei sicuro quale motosega scegliere? Questo <strong>assistente advisor</strong> ti aiuta a chiarire i dubbi più comuni
+      <em>in base ai modelli presenti in questa pagina</em> (25cc, 40cc, 52cc, 58cc, 62cc).
+    </p>
+
+    <p style="margin:10px 0 6px 0;"><strong>Domande tipiche:</strong></p>
+    <ul style="margin:0;padding-left:18px;">
+      <li>Devo tagliare legna per il camino: meglio 40cc o 52cc?</li>
+      <li>Ho solo potature e qualche ramo secco: mi basta il 25cc?</li>
+      <li>Rischio di prendere una motosega troppo pesante per il mio uso?</li>
+      <li>Che differenza reale c’è tra 58cc e 62cc?</li>
+    </ul>
+
+    <div style="margin-top:12px;">
+      <label for="ai-question-chainsaw"><strong>Scrivi il tuo dubbio:</strong></label>
+      <textarea id="ai-question-chainsaw" rows="3" style="width:100%;max-width:860px;" placeholder="Esempio: devo preparare legna per l’inverno, tronchi medi, uso ogni weekend…"></textarea>
+
+      <!-- NUOVO: Chatlog + chips (non rimuove nulla) -->
+      <div id="ai-chatlog-chainsaw" class="ai-chatlog" aria-live="polite"></div>
+      <div id="ai-chips-chainsaw" class="ai-chips"></div>
+
+      <div class="ai-row">
+        <button class="vevor-btn" type="button" onclick="aiAdvisorChainsaw()">Chiedi un consiglio</button>
+        <button class="ai-ghost" type="button" onclick="aiClearChainsaw()">Pulisci chat</button>
+        <span class="vevor-cta-note" style="margin:0;">Risposte sintetiche e coerenti con questa guida.</span>
+      </div>
+    </div>
+
+    <div id="ai-response-chainsaw" style="display:none;margin-top:14px;">
+      <strong>Consiglio:</strong>
+      <p id="ai-text-chainsaw" style="margin:8px 0 0 0;"></p>
+      <p style="font-size:0.9em;opacity:.8;margin:8px 0 0 0;">
+        Nota: per specifiche complete, foto/video e disponibilità aggiornata, usa sempre il pulsante sotto al modello.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<div class="vevor-card" data-accordion="product">
         <h2 id="25cc" class="vevor-h2">VEVOR 25 cc — leggera e maneggevole</h2>
 
         <div class="vevor-row">
@@ -92,24 +972,42 @@
               </p>
               <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> potatura stagionale di alberi da frutto, taglio di rami secchi, piccoli lavori di giardinaggio domestico, preparazione di legna sottile per camino o stufa.</p>
             </div>
+              
 
             <p style="margin:12px 0 0 0;">
-              <a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}" target="_blank" rel="nofollow sponsored noopener">👉 Vedi prezzo e disponibilità ({{CC}})</a>
+              
             </p>
           </div>
         </div>
 
-        <div class="vevor-procon">
+        
+      <p style="margin:14px 0 0 0;">
+        
+    <div class="vevor-cta-primary" style="margin:14px 0;">
+      <a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}">Verifica prezzo e disponibilità sul sito ufficiale VEVOR</a></div>
+    <button class="vevor-toggle" type="button" aria-expanded="false">Ulteriori info</button>
+      </p>
+    
+<div class="vevor-more">
+<div class="vevor-procon" style="margin-top:12px;">
+                <ul>
+                  <li><strong>Ideale per:</strong> potature leggere, rami piccoli, manutenzione saltuaria del giardino.</li>
+                  <li><strong>Da evitare se:</strong> tagli frequenti su legna dura o tronchi oltre ~20–25 cm.</li>
+                </ul>
+              </div>
+<div class="vevor-procon">
           <ul>
             <li><strong>Potenza/peso:</strong> 1,2 cv – 4,2 kg</li>
             <li><strong>Pro:</strong> Avviamento ,leggera e facile da gestire.</li>
             <li><strong>Contro:</strong> Taglio max 25cm e potenza contenuta,non adatta a tronchi grossi o lavori intensivi.</li>
           </ul>
         </div>
-      </div>
+      
+<div class="vevor-cta" style="margin-top:14px;"><a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}" target="_blank" rel="nofollow sponsored noopener">Verifica prezzo e disponibilità sul sito ufficiale VEVOR ({{CC}})</a></div>
+</div></div>
 
       <!-- 40 CC CARD -->
-      <div class="vevor-card">
+      <div class="vevor-card" data-accordion="product">
         <h2 id="40cc" class="vevor-h2">VEVOR 40 cc — equilibrio tra peso e potenza</h2>
 
         <div class="vevor-row">
@@ -130,24 +1028,42 @@
               </p>
               <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> taglio di legna da ardere di diametro medio, abbattimento di piccoli alberi, manutenzione di giardini di medie dimensioni, lavori periodici su legname non troppo spesso.</p>
             </div>
+              
 
             <p style="margin:12px 0 0 0;">
-              <a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}" target="_blank" rel="nofollow sponsored noopener">👉 Vedi prezzo e disponibilità ({{CC}})</a>
+              
             </p>
           </div>
         </div>
 
-        <div class="vevor-procon">
+        
+      <p style="margin:14px 0 0 0;">
+        
+    <div class="vevor-cta-primary" style="margin:14px 0;">
+      <a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}">Verifica prezzo e disponibilità sul sito ufficiale VEVOR</a></div>
+    <button class="vevor-toggle" type="button" aria-expanded="false">Ulteriori info</button>
+      </p>
+    
+<div class="vevor-more">
+<div class="vevor-procon" style="margin-top:12px;">
+                <ul>
+                  <li><strong>Ideale per:</strong> legna da ardere di diametro medio, uso domestico regolare, piccoli abbattimenti.</li>
+                  <li><strong>Da evitare se:</strong> tagli molto lunghi su tronchi grossi o uso continuativo pesante.</li>
+                </ul>
+              </div>
+<div class="vevor-procon">
           <ul>
             <li><strong>Potenza/peso:</strong> 1,8 cv – 5,6 kg</li>
             <li><strong>Pro:</strong>Avviamento,taglio max 30cm,versatile,gestibile.</li>
             <li><strong>Contro:</strong> non adatta a tronchi grossi .</li>
           </ul>
         </div>
-      </div>
+      
+<div class="vevor-cta" style="margin-top:14px;"><a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}" target="_blank" rel="nofollow sponsored noopener">Verifica prezzo e disponibilità sul sito ufficiale VEVOR ({{CC}})</a></div>
+</div></div>
 
       <!-- 52 CC CARD -->
-      <div class="vevor-card">
+      <div class="vevor-card" data-accordion="product">
         <h2 id="52cc" class="vevor-h2">VEVOR 52 cc — per lavori frequenti</h2>
 
         <div class="vevor-row">
@@ -167,14 +1083,30 @@
               </p>
               <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> taglio regolare di legna da ardere, abbattimento di alberi di medie dimensioni, manutenzione di terreni ampi, lavori stagionali ripetuti nel tempo.</p>
             </div>
+              
 
             <p style="margin:12px 0 0 0;">
-              <a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}" target="_blank" rel="nofollow sponsored noopener">👉 Vedi prezzo e disponibilità ({{CC}})</a>
+              
             </p>
           </div>
         </div>
 
-        <div class="vevor-procon">
+        
+      <p style="margin:14px 0 0 0;">
+        
+    <div class="vevor-cta-primary" style="margin:14px 0;">
+      <a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}">Verifica prezzo e disponibilità sul sito ufficiale VEVOR</a></div>
+    <button class="vevor-toggle" type="button" aria-expanded="false">Ulteriori info</button>
+      </p>
+    
+<div class="vevor-more">
+<div class="vevor-procon" style="margin-top:12px;">
+                <ul>
+                  <li><strong>Ideale per:</strong> uso frequente, legna media, lavori stagionali più impegnativi, terreni ampi.</li>
+                  <li><strong>Da evitare se:</strong> se fai solo potature leggere e vuoi il massimo della leggerezza.</li>
+                </ul>
+              </div>
+<div class="vevor-procon">
           <ul>
             <li><strong>Potenza/peso:</strong> 2,4 cv – 6,8 kg</li>
             <li><strong>Pro:</strong> Taglio max 43cm,per un uso più frequente rispetto alla 40cc.</li>
@@ -183,16 +1115,18 @@
         </div>
 
         <div class="vevor-rec" style="margin-top:12px;">
-          <h3>⭐ Modello consigliato</h3>
+          <h3>Consiglio rapido (scelta più equilibrata)</h3>
           <p style="margin:0;">
             Se sei indeciso e cerchi una motosega versatile per la maggior parte dei lavori domestici e rurali, la <strong>VEVOR 52 cc</strong> è la scelta più equilibrata:
             buona potenza, ottima resa su legna media e un peso ancora gestibile.
           </p>
         </div>
-      </div>
+      
+<div class="vevor-cta" style="margin-top:14px;"><a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}" target="_blank" rel="nofollow sponsored noopener">Verifica prezzo e disponibilità sul sito ufficiale VEVOR ({{CC}})</a></div>
+</div></div>
 
       <!-- 58 CC CARD -->
-      <div class="vevor-card">
+      <div class="vevor-card" data-accordion="product">
         <h2 id="58cc" class="vevor-h2">VEVOR 58 cc — potenza e controllo</h2>
 
         <div class="vevor-row">
@@ -212,24 +1146,42 @@
               </p>
               <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> taglio di tronchi di medio-grande diametro, lavori frequenti su legna robusta, manutenzione di aree verdi estese, utilizzo intensivo ma non professionale continuativo.</p>
             </div>
+              
 
             <p style="margin:12px 0 0 0;">
-              <a class="vevor-btn" href="https://www.vevor.it/motoseghe-a-gas-c_13329/vevor-motosega-a-gas-da-58-cc-motosega-a-benzina-508-mm-2-7-cv-arancione-nero-p_010979333678 target="_blank" rel="nofollow sponsored noopener">👉 Vedi prezzo e disponibilità ({{CC}})</a>
+              
             </p>
           </div>
         </div>
 
-        <div class="vevor-procon">
+        
+      <p style="margin:14px 0 0 0;">
+        
+    <div class="vevor-cta-primary" style="margin:14px 0;">
+      <a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}">Verifica prezzo e disponibilità sul sito ufficiale VEVOR</a></div>
+    <button class="vevor-toggle" type="button" aria-expanded="false">Ulteriori info</button>
+      </p>
+    
+<div class="vevor-more">
+<div class="vevor-procon" style="margin-top:12px;">
+                <ul>
+                  <li><strong>Ideale per:</strong> tronchi medio/grandi, più coppia, lavori intensi ma con buona gestibilità.</li>
+                  <li><strong>Da evitare se:</strong> se lavori sopra testa o per molte ore: peso e ingombro possono stancare.</li>
+                </ul>
+              </div>
+<div class="vevor-procon">
           <ul>
             <li><strong>Potenza/peso:</strong> 2,7cv - 7 KG</li>
             <li><strong>Pro:</strong> Taglio max 45cm,potente e affidabile.</li>
-            <li><strong>Contro:</strong> Più ingombrante,può essere pesante per lunghi lavori di potatura. </li>
+            <li><strong>Contro:</strong> Più ingombrante,può essere pesante dopo lunghe sessioni di lavoro. </li>
           </ul>
         </div>
-      </div>
+      
+<div class="vevor-cta" style="margin-top:14px;"><a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}" target="_blank" rel="nofollow sponsored noopener">Verifica prezzo e disponibilità sul sito ufficiale VEVOR ({{CC}})</a></div>
+</div></div>
 
       <!-- 62 CC CARD -->
-      <div class="vevor-card">
+      <div class="vevor-card" data-accordion="product">
         <h2 id="62cc" class="vevor-h2">VEVOR 62 cc — massima potenza</h2>
 
         <div class="vevor-row">
@@ -250,64 +1202,85 @@
               </p>
               <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> abbattimento di alberi di grande diametro, taglio di tronchi spessi, preparazione intensiva di legna da ardere, lavori gravosi su terreni boschivi o rurali.</p>
             </div>
+              
 
             <p style="margin:12px 0 0 0;">
-              <a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}" target="_blank" rel="nofollow sponsored noopener">👉 Vedi prezzo e disponibilità ({{CC}})</a>
+              
             </p>
           </div>
         </div>
 
-        <div class="vevor-procon">
+        
+      <p style="margin:14px 0 0 0;">
+        
+    <div class="vevor-cta-primary" style="margin:14px 0;">
+      <a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}">Verifica prezzo e disponibilità sul sito ufficiale VEVOR</a></div>
+    <button class="vevor-toggle" type="button" aria-expanded="false">Ulteriori info</button>
+      </p>
+    
+<div class="vevor-more">
+<div class="vevor-procon" style="margin-top:12px;">
+                <ul>
+                  <li><strong>Ideale per:</strong> lavori pesanti, tronchi grandi, abbattimenti importanti con barra lunga.</li>
+                  <li><strong>Da evitare se:</strong> se sei alle prime armi o fai lavori brevi: è più impegnativa da gestire.</li>
+                </ul>
+              </div>
+<div class="vevor-procon">
           <ul>
             <li><strong>Potenza/peso:</strong> 3,6cv - 8,2 kg</li>
             <li><strong>Pro:</strong> Potenza elevata,barra da 20",taglio max 45cm,per lavori pesanti.</li>
-            <li><strong>Contro:</strong> Pesante,richiede forza e controllo,eccessiva per lavori leggeri o brevi sessioni.</li>
+            <li><strong>Contro:</strong> Richiede forza e controllo,eccessiva per lavori leggeri o brevi sessioni.</li>
           </ul>
         </div>
-      </div>
+      
+<div class="vevor-cta" style="margin-top:14px;"><a class="vevor-btn" href="INSERISCI_LINK_{{LINK}}" target="_blank" rel="nofollow sponsored noopener">Verifica prezzo e disponibilità sul sito ufficiale VEVOR ({{CC}})</a></div>
+</div></div>
+<!-- ===== FINAL ADVISOR CONTAINER ===== -->
+<div class="vevor-card vevor-advisor-wrapper">
+
 
       <hr>
 
-      <h2 class="vevor-h2">Errori comuni nella scelta di una motosega</h2>
-      <div class="vevor-box">
-        <ul style="margin:0;">
-          <li><strong>Scegliere troppa potenza:</strong> una motosega sovradimensionata stanca di più e non migliora il risultato su lavori leggeri.</li>
-          <li><strong>Scegliere poca potenza:</strong> una cilindrata troppo bassa su tronchi grandi porta a vibrazioni, fatica e tagli imprecisi.</li>
-          <li><strong>Valutare solo il prezzo:</strong> risparmiare inizialmente può significare perdere tempo ed efficienza nel lungo periodo.</li>
-        </ul>
-      </div>
+      
 
-      <hr>
+<div class="vevor-info-section">
+  <h2 class="vevor-h2">In sintesi (per scegliere senza ripensamenti)</h2>
+  <div class="vevor-box">
+    <p style="margin-top:0;">
+      Parti dall’uso reale (potatura / legna / abbattimento) e scegli la cilindrata che ti permette di lavorare
+      senza stancarti troppo. Una motosega “troppo grande” non è un upgrade: spesso è solo più pesante e più impegnativa da gestire.
+    </p>
+    <p style="margin-bottom:0;">
+      Per confermare la scelta finale, usa il pulsante sotto al modello: trovi la scheda ufficiale VEVOR con dotazione, specifiche,
+      foto/video e disponibilità aggiornata.
+    </p>
+  </div>
+</div>
 
-      <h2 class="vevor-h2">Domande frequenti (FAQ)</h2>
+<div class="vevor-info-section">
+  <h2 class="vevor-h2">Checklist tecnica prima dell’acquisto (1 minuto)</h2>
+  <div class="vevor-box">
+    <ul style="margin:0;padding-left:18px;">
+      <li><strong>Diametro medio dei tronchi:</strong> se di rado superi 25–30 cm, non serve “il massimo”.</li>
+      <li><strong>Frequenza d’uso:</strong> saltuaria → più leggera; frequente → più coppia e stabilità.</li>
+      <li><strong>Ergonomia:</strong> peso, bilanciamento e vibrazioni incidono più della potenza percepita.</li>
+      <li><strong>Consumabili:</strong> catena e barra si cambiano; conta la disponibilità e la manutenzione.</li>
+    </ul>
+  </div>
 
-      <h3>Come posso vedere prezzo, informazioni complete e altre foto del prodotto?</h3>
-      <p>È sufficiente cliccare sul pulsante presente sotto ogni modello. Verrai reindirizzato alla pagina ufficiale VEVOR dove potrai consultare prezzo aggiornato, scheda tecnica completa e tutte le immagini del prodotto.</p>
-
-      <h3>Una motosega più potente taglia sempre meglio?</h3>
-      <p>No. La potenza deve essere proporzionata al tipo di lavoro: su tagli leggeri una cilindrata elevata non porta reali vantaggi.</p>
-
-      <h3>Quanto conta il peso della motosega?</h3>
-      <p>Molto. Un peso eccessivo affatica l’operatore, soprattutto durante sessioni prolungate o lavori di potatura.</p>
-
-      <h3>Meglio una cilindrata media o alta per uso domestico?</h3>
-      <p>Per la maggior parte degli utilizzi domestici intensivi, una 40 o 52 cc rappresenta il miglior compromesso.</p>
   <hr>
 
-
-<h2 class="vevor-h2">Perché fidarti di noi?</h2>
-
-<ul>
-  <li>Testiamo e confrontiamo il miglior rapporto qualità/prezzo.</li>
-  <li>Ti aiutiamo a scegliere in base alle tue esigenze il prodotto più adatto.</li>
-  <li>Analizziamo pro e contro reali per ogni prodotto/modello.</li>
-<li> Noi siamo affiliati a Vevor e ricaviamo una piccola percentuale da ogni vendita tramite il nostro blog,senza costi aggiuntivi per te!
-<li> Il nostro lavoro è indirizzare il cliente a fare l'acquisto giusto nel sito ufficiale Vevor.it!
-</ul>
-<hr>
-
-    
- <h2 class="vevor-h2">Come scegliere in un minuto</h2>
+  <h2 class="vevor-h2">Sicurezza essenziale (da non saltare)</h2>
+  <div class="vevor-box">
+    <ul style="margin:0;padding-left:18px;">
+      <li><strong>DPI:</strong> guanti, visiera/occhiali, cuffie e pantaloni antitaglio se lavori spesso.</li>
+      <li><strong>Catena:</strong> tensione corretta e lubrificazione sempre; una catena secca taglia male e scalda.</li>
+      <li><strong>Posizione:</strong> evita tagli sopra le spalle, lavora stabile e con presa a due mani.</li>
+    </ul>
+  </div>
+</div>
+<div class="vevor-info-section">
+<h2 class="vevor-h2">Scelta rapida (in base all’uso)</h2>
 
       <p>
   <strong>25 cc → </strong>Se fai solo potature e cerchi leggerezza<br>
@@ -317,186 +1290,343 @@
 <strong>62 cc →</strong>Se tagli  Tronchi grandi + abbattimento alberi grandi.
 
 
-  <hr>
-
-      </p>
-
-      <div class="advisor" id="assistente-scelta">
-        <div class="advisor-head">
-          <div class="advisor-badge" title="Assistente alla scelta">🛠️</div>
-          <div>
-            <h3 class="advisor-title">Hai un dubbio sulla scelta?</h3>
-            <p class="advisor-sub">Risponde solo in base ai modelli presenti in questa pagina (25 / 40 / 52 / 58 / 62 cc). Per prezzo e disponibilità aggiornati, apri il link del modello.</p>
-          </div>
-        </div>
-
-        <div class="chatlog" id="chatlog"></div>
-
-        <div class="chatrow">
-          <input id="q" type="text" placeholder="Es: Meglio 40 o 52 cc per fare legna?" autocomplete="off" />
-          <button id="askBtn" type="button">Chiedi</button>
-        </div>
-
-        <div class="chips" id="chips"></div>
+  <hr><h2 class="vevor-h2">Errori comuni nella scelta di una motosega</h2> 
+<div class="vevor-box"> 
+<ul style="margin:0;"> 
+<li><strong>Scegliere troppa potenza:</strong> una motosega sovradimensionata può diventare pesante su lavori leggeri.</li> 
+<li><strong>Scegliere poca potenza:</strong> una cilindrata troppo bassa su tronchi grandi porta a vibrazioni, fatica e tagli imprecisi.</li>
+ <li><strong>Comprare “più grande” pensando che duri di più:</strong> La durata del motore dipende dalla manutenzione,non dalla cilindrata.</li> 
+</ul>
       </div>
 
       <hr>
 
+      
+<div class="vevor-faq-section">
+<h2 class="vevor-h2">Domande frequenti (FAQ)</h2>
+
+
+      
+<div class="vevor-faq">
+  <details open class="vevor-faq-featured vevor-faq-featured" class="vevor-faq-featured">
+    <summary>
+      <span class="q">Come posso vedere prezzo, informazioni complete e altre foto del prodotto?</span>
+      <span class="chev" aria-hidden="true"></span>
+    </summary>
+    <div class="a"><div class="a-inner">
+      È sufficiente cliccare sul pulsante presente sotto ogni modello. Verrai reindirizzato alla pagina ufficiale VEVOR dove potrai consultare prezzo aggiornato, scheda tecnica completa e tutte le immagini e video del prodotto.
+    </div></div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="q">Una motosega più potente taglia sempre meglio?</span>
+      <span class="chev" aria-hidden="true"></span>
+    </summary>
+    <div class="a">
+      No. La potenza deve essere proporzionata al tipo di lavoro: su tagli leggeri una cilindrata elevata non porta reali vantaggi.
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="q">Quanto conta il peso della motosega?</span>
+      <span class="chev" aria-hidden="true"></span>
+    </summary>
+    <div class="a">
+      Molto. Un peso eccessivo affatica l’operatore, soprattutto durante sessioni prolungate o lavori di potatura.
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="q">Meglio una cilindrata media o alta per uso domestico?</span>
+      <span class="chev" aria-hidden="true"></span>
+    </summary>
+    <div class="a">
+      Per la maggior parte degli utilizzi domestici intensivi, una 40 o 52 cc rappresenta il miglior compromesso.
+    </div>
+  </details>
+</div>
+
+
+</div>
+<hr>
+
+
+
+<h2 class="vevor-h2">Perché fidarti di noi?</h2>
+
+
+
+<ul>
+  <li><strong>Selezione guidata da criteri reali:</strong> non guardiamo solo la cilindrata, ma anche peso, gestione e tipo di lavoro (potatura, legna, abbattimento).</li>
+  <li><strong>Diciamo quando NON conviene comprare un modello:</strong> se una motosega è troppo grande o troppo piccola per il tuo uso, te lo scriviamo chiaramente.</li>
+  <li><strong>Acquisto sul sito ufficiale:</strong> rimandiamo sempre alla pagina prodotto VEVOR per scheda tecnica, foto/video e disponibilità aggiornata.</li>
+  <li><strong>Guida pensata per farti risparmiare tempo:</strong> trovi esempi di utilizzo e indicazioni rapide per scegliere senza perdere ore.</li>
+</ul>
+
+<hr>
+
+    
+ 
 
       <p class="vevor-note"><em>
         Questo sito utilizza link di affiliazione. Acquistando tramite questi link potrei ricevere una commissione,
         senza costi aggiuntivi per te.
       </em></p>
 
+
+</div>
+
     </div>
 
 
-    <!-- SIDEBAR -->
-    <aside class="vevor-side">
-      <h3 style="margin-top:0;">Scorciatoie</h3>
-      <ul style="margin:0;padding-left:18px;">
-        <li><a href="#25cc">25 cc</a></li>
-        <li><a href="#40cc">40 cc</a></li>
-        <li><a href="#52cc">52 cc</a></li>
-        <li><a href="#58cc">58 cc</a></li>
-        <li><a href="#62cc">62 cc</a></li>
-        <li><a href="#assistente-scelta">Assistente scelta</a></li>
-      </ul>
-      <hr style="border:0;border-top:1px solid #ddd;margin:14px 0;">
-      <p style="margin:0;">
-        Suggerimento rapido: se fai <strong>potature</strong> punta su leggerezza (25–40 cc). Se fai <strong>legna spesso</strong> il miglior compromesso è spesso 52 cc.
-        Se invece lavori su <strong>tronchi medio-grandi</strong> guarda 58 cc; per <strong>tronchi grandi</strong> 62 cc.
-      </p>
-    </aside>
-  </div>
-</section>
+
+</div>
+<!-- ===== END FINAL ADVISOR CONTAINER ===== -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const faqs = document.querySelectorAll(".vevor-faq details");
+    faqs.forEach(faq => {
+      faq.addEventListener("toggle", () => {
+        if (faq.open) {
+          faqs.forEach(other => {
+            if (other !== faq) other.removeAttribute("open");
+          });
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+
+
+
 
 <script>
-/* Assistente alla scelta – knowledge base locale (no scraping, no prezzi in tempo reale) */
 (function(){
-  const KB = {
-    products: {
-      "25": { name:"VEVOR 25 cc", weight:"4,2 kg", power:"1,2 cv", use:"potature, rami, giardino e tagli leggeri" },
-      "40": { name:"VEVOR 40 cc", weight:"5,6 kg", power:"1,8 cv", use:"legna da ardere e tronchi piccoli/medi (uso domestico regolare)" },
-      "52": { name:"VEVOR 52 cc", weight:"6,8 kg", power:"2,4 cv", use:"uso frequente, tronchi medi, legna con più continuità" },
-      "58": { name:"VEVOR 58 cc", weight:"7 kg", power:"2,7 cv", bar:"508 mm (20\")", use:"tronchi medio-grandi e lavori più impegnativi" },
-      "62": { name:"VEVOR 62 cc", weight:"8,2 kg", power:"3,6 cv", use:"tronchi grandi e lavori pesanti" }
-    },
-    qa: [
-      { patterns:["quale mi consigli","quale scegliere","consigliami","che motosega prendo"], answer:"Dipende da cosa devi fare e quanto spesso. Per potature leggere: 25 cc. Per legna/tronchi piccoli-medi: 40 o 52 cc. Se hai tronchi medio-grandi e lavori intensi: 58 cc. La 62 cc ha senso solo se fai lavori pesanti su tronchi grandi." },
-      { patterns:["meglio più potente","prendo la più potente","troppa potenza","esagerata"], answer:"Non sempre conviene: più potenza spesso significa più peso e più fatica. Se non tagli tronchi grossi, una cilindrata media è spesso la scelta più furba." },
-      { patterns:["conta il peso","è pesante","stancante"], answer:"Conta tantissimo. Se fai potature o sessioni lunghe, stare su 25–40 cc è più comodo. Per legna frequente il compromesso tipico è 52 cc." },
-      { patterns:["40 o 52","40 vs 52","differenza 40 52"], answer:"Se la usi ogni tanto su legna non troppo dura, 40 cc può bastare. Se la usi spesso o vuoi meno fatica nei tagli, 52 cc è più comoda." },
-      { patterns:["52 o 58","52 vs 58","differenza 52 58"], answer:"Se fai legna spesso e vuoi un buon compromesso: 52 cc. Se i diametri aumentano (tronchi medio-grandi) e vuoi più margine nei tagli difficili: 58 cc." },
-      { patterns:["58 o 62","58 vs 62","differenza 58 62"], answer:"Per la maggior parte delle persone basta la 58 cc. La 62 cc la prenderei solo se fai spesso lavori pesanti su tronchi grandi (e accetti più peso)." },
-      { patterns:["prezzo","costa","disponibile","disponibilità","sconto"], answer:"Per prezzo e disponibilità aggiornati ti rimando al link del modello: lì trovi il dato in tempo reale sulla pagina ufficiale." }
-    ],
-    suggestions:[
-      "Quale motosega mi consigli per casa?",
-      "Meglio 40 o 52 cc per fare legna?",
-      "Che differenza c’è tra 52 e 58 cc?",
-      "La 62 cc è esagerata per uso domestico?",
-      "Quanto pesa la 58 cc?",
-      "Che barra ha la 58 cc?"
-    ]
-  };
-
-  const log = document.getElementById("chatlog");
-  const input = document.getElementById("q");
-  const btn = document.getElementById("askBtn");
-  const chips = document.getElementById("chips");
-  if(!log || !input || !btn || !chips) return;
-
-  function addBubble(html, who){
-    const d = document.createElement("div");
-    d.className = "bubble " + (who==="me" ? "me" : "bot");
-    d.innerHTML = html;
-    log.appendChild(d);
-    log.scrollTop = log.scrollHeight;
+  function setState(card, isOpen){
+    card.classList.toggle('open', isOpen);
+    const btn = card.querySelector('.vevor-toggle');
+    if(btn){
+      btn.setAttribute('aria-expanded', String(isOpen));
+      btn.textContent = isOpen ? 'Mostra meno' : 'Ulteriori info';
+    }
   }
 
-  function norm(s){
-    return (s||"").toLowerCase()
-      .replace(/[àáâãä]/g,"a").replace(/[èéêë]/g,"e").replace(/[ìíîï]/g,"i")
-      .replace(/[òóôõö]/g,"o").replace(/[ùúûü]/g,"u")
-      .replace(/[^a-z0-9\s]/g," ").replace(/\s+/g," ").trim();
-  }
-
-  function extractCC(s){
-    const m = s.match(/\b(25|40|52|58|62)\b/);
-    return m ? m[1] : null;
-  }
-
-  function intent(s){
-    if(/peso|pesa|kg/.test(s)) return "peso";
-    if(/cv|potenza|cavalli/.test(s)) return "potenza";
-    if(/barra|pollici|20|508/.test(s)) return "barra";
-    if(/prezzo|costa|disponib|sconto/.test(s)) return "prezzo";
-    return "qa";
-  }
-
-  function reply(raw){
-    const s = norm(raw);
-    const cc = extractCC(s);
-    const it = intent(s);
-
-    if(it==="peso"){
-      if(cc && KB.products[cc]) return `La <strong>${KB.products[cc].name}</strong> pesa circa <strong>${KB.products[cc].weight}</strong>.`;
-      return "Dimmi quale cilindrata (25/40/52/58/62) e ti dico il peso.";
-    }
-
-    if(it==="potenza"){
-      if(cc && KB.products[cc]) return `La <strong>${KB.products[cc].name}</strong> è indicata a <strong>${KB.products[cc].power}</strong>.`;
-      return "Dimmi quale cilindrata (25/40/52/58/62) e ti dico la potenza.";
-    }
-
-    if(it==="barra"){
-      if((cc==="58" || s.includes("58")) && KB.products["58"].bar) return `Per la <strong>58 cc</strong> in questa pagina: barra <strong>${KB.products["58"].bar}</strong>.`;
-      return "Per info sulla barra, dimmi quale cilindrata (25/40/52/58/62).";
-    }
-
-    if(it==="prezzo") return "Per prezzo e disponibilità aggiornati: apri il link del modello (pagina ufficiale).";
-
-    // Q&A patterns
-    for(const item of KB.qa){
-      for(const p of item.patterns){
-        if(s.includes(norm(p))) return item.answer;
-      }
-    }
-
-    // fallback “umano”
-    if(!cc){
-      return "Ok. Mi dici che lavoro devi fare (potatura / legna / tronchi grandi) e quanto spesso la userai? Così ti indirizzo sul modello giusto.";
-    }
-    if(KB.products[cc]){
-      return `La <strong>${KB.products[cc].name}</strong> è indicata per <strong>${KB.products[cc].use}</strong>. Se vuoi, dimmi cosa devi tagliare e ti confermo se è la scelta giusta.`;
-    }
-    return "Posso aiutarti solo sui modelli presenti in pagina (25/40/52/58/62 cc).";
-  }
-
-  function renderChips(){
-    chips.innerHTML = "";
-    KB.suggestions.forEach(t=>{
-      const c = document.createElement("div");
-      c.className = "chip";
-      c.textContent = t;
-      c.onclick = ()=>{ input.value = t; input.focus(); };
-      chips.appendChild(c);
+  function closeOthers(currentCard){
+    document.querySelectorAll('.vevor-card[data-accordion="product"].open').forEach(function(card){
+      if(card !== currentCard) setState(card, false);
     });
   }
 
-  function ask(){
-    const raw = input.value.trim();
-    if(!raw) return;
-    addBubble(raw, "me");
-    input.value = "";
-    setTimeout(()=> addBubble(reply(raw), "bot"), 250);
-  }
+  document.querySelectorAll('.vevor-card[data-accordion="product"]').forEach(function(card){
+    const btn = card.querySelector('.vevor-toggle');
+    if(!btn) return;
 
-  btn.addEventListener("click", ask);
-  input.addEventListener("keydown", (e)=>{ if(e.key==="Enter") ask(); });
+    // default closed
+    setState(card, false);
 
-  addBubble('Dimmi pure cosa devi fare e ti aiuto a scegliere tra <strong>25 / 40 / 52 / 58 / 62 cc</strong>.<div class="meta">Esempio: “Faccio legna ogni weekend: meglio 40 o 52?”</div>', "bot");
-  renderChips();
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      const willOpen = !card.classList.contains('open');
+      if(willOpen) closeOthers(card);
+      setState(card, willOpen);
+    });
+  });
+
+  // Click anywhere on the card opens/closes (like the button), except on links/buttons
+  document.querySelectorAll('.vevor-card[data-accordion="product"]').forEach(function(card){
+    card.addEventListener('click', function(e){
+      if(e.target.closest('a, button')) return;
+      const btn = card.querySelector('.vevor-toggle');
+      if(btn) btn.click();
+    });
+  });
 })();
+</script>
+
+</div>
+
+<script>
+/* =========================================================
+   AI ADVISOR — Knowledge base (molte domande/risposte)
+   - Niente scraping
+   - Risponde solo su 25/40/52/58/62 e concetti in pagina
+   ========================================================= */
+const CHAINSAW_KB = {
+  products:{
+    "25": {cc:25, name:"25cc", weight:"4,2 kg", power:"1,2 cv", maxCut:"~25 cm", best:["potature","rami piccoli","giardino","uso saltuario"], avoid:["tronchi grossi","lavori intensi"]},
+    "40": {cc:40, name:"40cc", weight:"5,6 kg", power:"1,8 cv", maxCut:"~30 cm", best:["legna domestica","tronchi piccoli/medi","uso regolare"], avoid:["tronchi grossi","sessioni pesanti"]},
+    "52": {cc:52, name:"52cc", weight:"6,8 kg", power:"2,4 cv", maxCut:"~43 cm", best:["uso frequente","legna media","terreni ampi","abbattimenti medi"], avoid:["solo potatura lunga"]},
+    "58": {cc:58, name:"58cc", weight:"7 kg", power:"2,7 cv", maxCut:"~45 cm", best:["tronchi medio/grandi","legna dura","lavori intensi"], avoid:["chi cerca leggerezza","potature lunghe"]},
+    "62": {cc:62, name:"62cc", weight:"8,2 kg", power:"3,6 cv", maxCut:"~45 cm", best:["tronchi grandi","lavori pesanti","abbattimenti importanti"], avoid:["principianti","lavori brevi/leggeri"]}
+  },
+
+  // tante varianti: l'idea è che non sembri “finta”
+  qa:[
+    {patterns:["quale scegliere","quale mi consigli","consigliami","che motosega prendo","che modello prendo","non so quale prendere"], answer:
+      "Dimmi due cose e ti indirizzo subito: 1) cosa tagli (potatura / legna / tronchi grandi) 2) quanto spesso la userai. In generale: potature → 25cc; legna domestica → 40–52cc; tronchi medio/grandi o lavori più seri → 58cc; 62cc solo se fai davvero lavori pesanti su tronchi grandi."},
+
+    {patterns:["differenza 40 52","40 o 52","meglio 40 o 52","40 vs 52"], answer:
+      "Se vuoi maneggevolezza e fai legna “normale” ogni tanto: 40cc. Se fai legna più spesso o vuoi meno fatica nei tagli: 52cc (è il compromesso più facile da azzeccare)."},
+    {patterns:["differenza 52 58","52 o 58","meglio 52 o 58","52 vs 58"], answer:
+      "52cc è più equilibrata e gestibile. 58cc ha più coppia e regge meglio tronchi medio/grandi e legna dura. Se fai sessioni lunghe e vuoi meno peso: 52cc. Se il legno è grosso o duro: 58cc."},
+    {patterns:["differenza 58 62","58 o 62","meglio 58 o 62","58 vs 62"], answer:
+      "Per la maggior parte delle persone basta 58cc: potente ma ancora gestibile. 62cc ha senso solo se fai lavori pesanti spesso (tronchi grandi/abbattimenti importanti), perché pesa di più e stanca di più."},
+
+    {patterns:["troppo potente","meglio più potente","prendo la più potente","esagerata"], answer:
+      "Occhio: più potenza spesso vuol dire più peso e più fatica. Se non tagli tronchi grossi, una cilindrata media ti fa lavorare meglio e più a lungo, senza “ammazzarti” braccia e schiena."},
+
+    {patterns:["peso conta","quanto conta il peso","è pesante","mi stanca","stancante","maneggevole"], answer:
+      "Conta tantissimo. Se fai potature o lavori lunghi, il peso diventa il primo fattore. Se vuoi stare comodo: 25–40cc. Se fai legna frequente: 52cc è un compromesso; 58–62cc sono più impegnative."},
+
+    {patterns:["potatura","rami","ramo","ulivo","frutto"], answer:
+      "Se fai soprattutto potatura/rami piccoli, 25cc è la scelta più sensata: leggera e controllabile. Salire di cilindrata, in quel caso, spesso significa solo più peso senza vantaggi reali."},
+
+    {patterns:["legna camino","legna per camino","stufa","camino","legna da ardere"], answer:
+      "Per legna da stufa/camino con diametri medi: 40cc se vuoi leggerezza; 52cc se la usi spesso o vuoi più margine nei tagli. Se parli di tronchi davvero grandi, allora 58cc."},
+
+    {patterns:["abbattere","abbattimento","alberi","albero"], answer:
+      "Per abbattimenti: 52cc per alberi medi e uso non estremo. 58cc se vuoi più margine su alberi medio/grandi. 62cc solo se fai spesso abbattimenti importanti e tronchi grossi."},
+
+    {patterns:["taglio 40 cm","40cm","tronchi 40","diametro 40"], answer:
+      "Se parli di tronchi intorno ai 40 cm, io starei su 52cc (se è saltuario) oppure 58cc (se è frequente o legno duro). La 40cc rischia di faticare su quel diametro."},
+
+    {patterns:["taglio 30 cm","30cm","tronchi 30","diametro 30"], answer:
+      "Se ti muovi intorno ai 30 cm: 40cc può bastare se l’uso è domestico e non continuativo. Se lo fai spesso o vuoi meno fatica, 52cc è più “comoda”."},
+
+    {patterns:["principiante","prima volta","non sono esperto","poca esperienza"], answer:
+      "Se sei alle prime armi, meglio non esagerare con il peso: 25cc per potature e lavori leggeri; 40cc per legna domestica. Se ti serve più potenza, 52cc è la più equilibrata, ma evita 62cc se non hai esperienza."},
+
+    {patterns:["prezzo","costa","disponibile","disponibilità","sconto","spedizione"], answer:
+      "Per prezzo e disponibilità aggiornati ti conviene sempre aprire il pulsante sotto al modello: lì trovi le info in tempo reale sulla pagina ufficiale."},
+
+    {patterns:["quanti cv","potenza","cv"], answer:
+      "In questa guida: 25cc → 1,2cv • 40cc → 1,8cv • 52cc → 2,4cv • 58cc → 2,7cv • 62cc → 3,6cv. Se mi dici cosa devi tagliare, ti dico quale ha più senso."},
+
+    {patterns:["quanto pesa","peso"], answer:
+      "Indicativamente: 25cc 4,2kg • 40cc 5,6kg • 52cc 6,8kg • 58cc 7kg • 62cc 8,2kg. Se fai sessioni lunghe, il peso fa una differenza enorme."}
+  ],
+
+  suggestions:[
+    "Meglio 40cc o 52cc per legna da camino?",
+    "Ho tronchi da 40 cm: cosa conviene?",
+    "Faccio solo potature: mi basta il 25cc?",
+    "Che differenza c’è tra 58cc e 62cc?",
+    "Rischio di prenderla troppo pesante?"
+  ]
+};
+
+function _norm(s){
+  return (s||"").toLowerCase()
+    .replace(/[àáâãä]/g,"a").replace(/[èéêë]/g,"e").replace(/[ìíîï]/g,"i").replace(/[òóôõö]/g,"o").replace(/[ùúûü]/g,"u")
+    .replace(/[^a-z0-9\s]/g," ").replace(/\s+/g," ").trim();
+}
+
+function _addBubbleChainsaw(text, who){
+  const log = document.getElementById("ai-chatlog-chainsaw");
+  if(!log) return;
+  const div = document.createElement("div");
+  div.className = "ai-bubble " + (who==="user" ? "ai-user" : "ai-bot");
+  div.innerHTML = text;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+}
+
+function _renderChipsChainsaw(){
+  const wrap = document.getElementById("ai-chips-chainsaw");
+  if(!wrap) return;
+  wrap.innerHTML = "";
+  CHAINSAW_KB.suggestions.forEach(t=>{
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "ai-chip";
+    b.textContent = t;
+    b.addEventListener("click", ()=>{
+      const qEl = document.getElementById("ai-question-chainsaw");
+      if(qEl){ qEl.value = t; qEl.focus(); }
+    });
+    wrap.appendChild(b);
+  });
+}
+
+function _matchQAChainsaw(q){
+  const s = _norm(q);
+  // match “forte”: pattern contenuto
+  for(const item of CHAINSAW_KB.qa){
+    for(const p of item.patterns){
+      const np = _norm(p);
+      if(np && s.includes(np)) return item.answer;
+    }
+  }
+  // match “soft”: parole chiave con score
+  const words = s.split(" ").filter(Boolean);
+  let best=null, bestScore=0;
+
+  for(const item of CHAINSAW_KB.qa){
+    let score=0;
+    for(const p of item.patterns){
+      const pw = _norm(p).split(" ");
+      for(const w of pw){
+        if(w.length>=4 && words.includes(w)) score++;
+      }
+    }
+    if(score>bestScore){ bestScore=score; best=item; }
+  }
+  if(bestScore>=2) return best.answer;
+
+  // fallback: suggerisci 2 domande e chiedi un dettaglio
+  return "Ok. Mi dici <strong>cosa tagli</strong> (potatura / legna / tronchi grandi) e <strong>quanto spesso</strong> la userai? Se vuoi, clicca una delle domande suggerite qui sotto: ti rispondo subito in modo più preciso.";
+}
+
+function aiClearChainsaw(){
+  const log = document.getElementById("ai-chatlog-chainsaw");
+  const respBox = document.getElementById("ai-response-chainsaw");
+  const text = document.getElementById("ai-text-chainsaw");
+  if(log) log.innerHTML = "";
+  if(text) text.innerText = "";
+  if(respBox) respBox.style.display = "none";
+
+  _addBubbleChainsaw(
+    "Dimmi pure cosa devi fare e ti indirizzo sul modello più sensato tra <strong>25cc / 40cc / 52cc / 58cc / 62cc</strong>.<div class='ai-meta'>Esempio: “Faccio legna ogni weekend, tronchi medi: cosa conviene?”</div>",
+    "bot"
+  );
+  _renderChipsChainsaw();
+}
+
+function aiAdvisorChainsaw(){
+  const qEl = document.getElementById('ai-question-chainsaw');
+  const raw = (qEl && qEl.value) ? qEl.value.trim() : "";
+  if(!raw) return;
+
+  // UI: chat style
+  _addBubbleChainsaw(raw, "user");
+  qEl.value = "";
+
+  // risposta “umana” con micro-pausa
+  setTimeout(()=>{
+    const ans = _matchQAChainsaw(raw);
+    _addBubbleChainsaw(ans, "bot");
+
+    // tieni anche il box “Consiglio” originale (non lo rimuoviamo)
+    const box = document.getElementById('ai-response-chainsaw');
+    const text = document.getElementById('ai-text-chainsaw');
+    if(text) text.innerText = (ans||"").replace(/<[^>]*>/g,""); // testo pulito
+    if(box) box.style.display = 'block';
+
+    _renderChipsChainsaw();
+  }, 260);
+}
+
+// init
+document.addEventListener("DOMContentLoaded", ()=>{
+  aiClearChainsaw();
+});
 </script>
