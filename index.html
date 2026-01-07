@@ -828,40 +828,47 @@ li{ font-size: 15.6px; }
       
 
       
-<div class="vevor-info-section vevor-section" id="ai-advisor">
-  <h2 class="vevor-h2">Hai un dubbio? Chiedi un consiglio</h2>
+<section id="ai-advisor" class="vevor-section" style="margin:18px 0 0;">
+  <h2 class="vevor-h2">Parla con l’assistente advisor</h2>
   <div class="vevor-box" style="background:linear-gradient(180deg,#fff7f0 0%, #ffffff 100%);border-left:6px solid #e65100;">
-    <p style="margin-top:0;">
-      Non sei sicuro quale motosega scegliere? Questo <strong>assistente advisor</strong> ti aiuta a chiarire i dubbi più comuni
-      <em>in base ai modelli presenti in questa pagina</em> (25cc, 40cc, 52cc, 58cc, 62cc).
+    <p style="margin:0 0 10px 0;">
+      Fai una domanda <strong>solo</strong> sui modelli presenti in questa pagina (es. <em>“Quanto pesa la 62cc?”</em>, <em>“Che barra ha la 40cc?”</em>).
+      L’assistente risponde usando una mini‑scheda tecnica dei prodotti di questa guida.
     </p>
 
-    <p style="margin:10px 0 6px 0;"><strong>Domande tipiche:</strong></p>
-    <ul style="margin:0;padding-left:18px;">
-      <li>Devo tagliare legna per il camino: meglio 40cc o 52cc?</li>
-      <li>Ho solo potature e qualche ramo secco: mi basta il 25cc?</li>
-      <li>Rischio di prendere una motosega troppo pesante per il mio uso?</li>
-      <li>Che differenza reale c’è tra 58cc e 62cc?</li>
-    </ul>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;">
+      <div style="flex:1;min-width:260px;">
+        <label for="ai-question" style="font-weight:800;display:block;margin-bottom:6px;">Scrivi la tua domanda</label>
+        <textarea id="ai-question" rows="3" style="width:100%;max-width:980px;" placeholder="Esempio: quanto pesa la motosega 62cc?"></textarea>
 
-    <div style="margin-top:12px;">
-      <label for="ai-question-chainsaw"><strong>Scrivi il tuo dubbio:</strong></label>
-      <textarea id="ai-question-chainsaw" rows="3" style="width:100%;max-width:860px;" placeholder="Esempio: devo preparare legna per l’inverno, tronchi medi, uso ogni weekend…"></textarea>
-      <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-        <button class="vevor-btn" type="button" onclick="aiAdvisorChainsaw()">Chiedi un consiglio</button>
-        <span class="vevor-cta-note" style="margin:0;">Risposte sintetiche e coerenti con questa guida.</span>
+        <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <button id="ai-ask" class="vevor-btn" type="button">Chiedi</button>
+          <button id="ai-clear" class="vevor-btn" type="button" style="background:#1f2937;">Pulisci</button>
+          <span style="font-size:.92em;opacity:.85;">Tip: indica la cilindrata (25/40/52/58/62cc) per una risposta precisa.</span>
+        </div>
+
+        <div style="margin-top:10px;font-size:.92em;opacity:.9;">
+          <strong>Esempi rapidi:</strong>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
+            <button type="button" class="vevor-btn" style="background:#374151;" data-ai-example="quanto pesa la motosega 62cc?">Peso 62cc</button>
+            <button type="button" class="vevor-btn" style="background:#374151;" data-ai-example="che barra ha la motosega 52cc?">Barra 52cc</button>
+            <button type="button" class="vevor-btn" style="background:#374151;" data-ai-example="mi basta la 25cc per potature?">Uso 25cc</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:260px;">
+        <div id="ai-answer-wrap" style="display:none;">
+          <div style="font-weight:900;margin-bottom:6px;">Risposta</div>
+          <div id="ai-answer" style="color:#111827;line-height:1.55;background:#ffffff;border:1px solid rgba(0,0,0,.10);padding:12px 14px;border-radius:14px;"></div>
+          <div style="margin-top:8px;font-size:.9em;opacity:.8;">
+            Nota: per dettagli completi (foto/video, disponibilità, specifiche aggiornate) usa sempre il pulsante “Vai alla scheda ufficiale VEVOR” sotto al modello.
+          </div>
+        </div>
       </div>
     </div>
-
-    <div id="ai-response-chainsaw" style="display:none;margin-top:14px;">
-      <strong>Consiglio:</strong>
-      <p id="ai-text-chainsaw" style="margin:8px 0 0 0;"></p>
-      <p style="font-size:0.9em;opacity:.8;margin:8px 0 0 0;">
-        Nota: per specifiche complete, foto/video e disponibilità aggiornata, usa sempre il pulsante sotto al modello.
-      </p>
-    </div>
   </div>
-</div>
+</section>
 
 
 <div class="vevor-card" data-accordion="product">
@@ -1368,38 +1375,130 @@ li{ font-size: 15.6px; }
 </div>
 
 <script>
-function aiAdvisorChainsaw(){
-  const qEl = document.getElementById('ai-question-chainsaw');
-  const q = (qEl && qEl.value ? qEl.value : '').toLowerCase();
-  let r = "In generale: potature leggere → 25cc; legna domestica e uso regolare → 40–52cc; lavori più impegnativi e tronchi grandi → 58–62cc. Scegli sempre anche in base a peso e frequenza d’uso.";
+(function(){
+  const MODELS = {
+    "25": { cc: 25, name: "Motosega VEVOR 25cc", weightKg: 4.2, barMm: 305, note: "potature e lavori leggeri" },
+    "40": { cc: 40, name: "Motosega VEVOR 40cc", weightKg: 5.6, barMm: 355, note: "uso domestico e legna leggera/medio" },
+    "52": { cc: 52, name: "Motosega VEVOR 52cc", weightKg: 6.8, barMm: 455, note: "compromesso per legna domestica e uso regolare" },
+    "58": { cc: 58, name: "Motosega VEVOR 58cc", weightKg: 7.0, barMm: 508, note: "lavori impegnativi (peso da considerare)" },
+    "62": { cc: 62, name: "Motosega VEVOR 62cc", weightKg: 8.2, barMm: 508, note: "tagli importanti / tronchi grandi (più affaticante)" }
+  };
 
-  const has = (w) => q.includes(w);
+  const qEl = document.getElementById('ai-question');
+  const askBtn = document.getElementById('ai-ask');
+  const clearBtn = document.getElementById('ai-clear');
+  const wrap = document.getElementById('ai-answer-wrap');
+  const out = document.getElementById('ai-answer');
 
-  // intent signals
-  const potatura = has('potatura') || has('rami') || has('ramo') || has('frutto') || has('ulivo');
-  const leggero = has('leggera') || has('leggero') || has('peso') || has('stanco') || has('stanc') || has('maneggevole');
-  const legna = has('legna') || has('camino') || has('stufa') || has('ceppi');
-  const tronchi = has('tronchi') || has('tronco') || has('diametro') || has('grosso') || has('grossi') || has('grandi');
-  const abbatt = has('abbatt') || has('alberi') || has('albero');
-  const raro = has('raro') || has('saltuar') || has('poco') || has('una volta') || has('ogni tanto');
+  function norm(s){ return (s||"").toLowerCase().replace(/\s+/g,' ').trim(); }
+  function detectCc(t){
+    const m = t.match(/\b(25|40|52|58|62)\s*cc\b/) || t.match(/\b(25|40|52|58|62)\b/);
+    return m ? m[1] : null;
+  }
+  function wants(t, keys){ return keys.some(k => t.indexOf(k) !== -1); }
 
-  if(potatura && !tronchi && !abbatt){
-    r = "Se fai soprattutto potature e rami piccoli, il 25cc è la scelta più sensata: leggero, semplice e meno faticoso. Salire di cilindrata in questo caso spesso significa solo più peso.";
-  } else if(legna && (has('medio') || has('medi') || !tronchi) ){
-    r = "Per legna da camino/stufa (diametri medi) il miglior equilibrio di solito è 40cc o 52cc: la 40cc se vuoi più maneggevolezza, la 52cc se prevedi uso più frequente o legna più dura.";
-  } else if((tronchi || abbatt) && !raro){
-    r = "Se parli di tronchi medio/grandi o abbattimenti, guarda 58cc o 62cc: più coppia e continuità di taglio. Valuta però il peso: se non sei allenato, una 58cc può essere il compromesso migliore.";
-  } else if(raro && (tronchi || abbatt)){
-    r = "Se l’uso è saltuario ma ogni tanto affronti tronchi più grandi, valuta 52cc o 58cc: abbastanza potenza senza essere eccessivamente impegnative come una 62cc.";
-  } else if(leggero && (tronchi || abbatt)){
-    r = "Se vuoi qualcosa di gestibile ma temi che i tronchi siano impegnativi, la 52cc è spesso il punto di equilibrio: più spinta della 40cc, ma meno impegnativa delle 58–62cc.";
-  } else if(leggero && !legna && !tronchi){
-    r = "Se la priorità è maneggevolezza (poco peso e poca fatica), resta su 25cc o 40cc in base a quanto spesso tagli: 25cc per lavori leggeri, 40cc se vuoi un po’ più di margine.";
+  function answer(raw){
+    const t = norm(raw);
+    if(!t){
+      return "Scrivi una domanda specifica (es. “quanto pesa la 62cc?” oppure “che barra ha la 40cc?”).";
+    }
+    const ccKey = detectCc(t);
+    if(!ccKey || !MODELS[ccKey]){
+      return "Per rispondere con precisione, indica la cilindrata nella domanda: 25cc, 40cc, 52cc, 58cc o 62cc.";
+    }
+    const m = MODELS[ccKey];
+
+    const askWeight = wants(t, ['pesa','peso','kg','chil']);
+    const askBar = wants(t, ['barra','lama','guidacatena','mm','pollic']);
+    const askUse = wants(t, ['ideale','uso','serve','basta','potature','rami','legna','camino','stufa','tronchi','abbatt','alberi','albero','grosso','grandi']);
+    const askCompare = wants(t, ['meglio','vs','confronto','tra']) && /\b(25|40|52|58|62)\b/.test(t);
+
+    if(askWeight){
+      return `${m.name}: pesa circa <strong>${String(m.weightKg).replace('.',',')} kg</strong> (peso prodotto).`;
+    }
+    if(askBar){
+      return `${m.name}: monta una barra guida da circa <strong>${m.barMm} mm</strong>.`;
+    }
+
+    if(askUse){
+      if(wants(t, ['potature','rami','ramo','ulivo','frutto'])){
+        return "Per potature/rami piccoli: <strong>25cc</strong> (meno peso). Se vuoi più margine senza esagerare: <strong>40cc</strong>.";
+      }
+      if(wants(t, ['legna','camino','stufa','ceppi'])){
+        return "Per legna domestica: il compromesso tipico è <strong>40–52cc</strong> (40cc più maneggevole, 52cc più spinta).";
+      }
+      if(wants(t, ['tronchi','abbatt','alberi','albero','grosso','grandi'])){
+        return "Per tronchi medio/grandi: guarda <strong>58–62cc</strong>. Se temi il peso, spesso la <strong>58cc</strong> è il compromesso migliore.";
+      }
+      return `${m.name}: indicazione rapida → ${m.note}.`;
+    }
+
+    if(askCompare){
+      const mentioned = Array.from(new Set((t.match(/\b(25|40|52|58|62)\b/g)||[]))).slice(0,3);
+      const rows = mentioned.map(k => {
+        const x = MODELS[k];
+        return `<tr><td style="padding:6px 8px;border-top:1px solid rgba(0,0,0,.08);"><strong>${x.cc}cc</strong></td><td style="padding:6px 8px;border-top:1px solid rgba(0,0,0,.08);">${String(x.weightKg).replace('.',',')} kg</td><td style="padding:6px 8px;border-top:1px solid rgba(0,0,0,.08);">${x.barMm} mm</td></tr>`;
+      }).join('');
+      return `Confronto rapido:<div style="overflow:auto;margin-top:8px;"><table style="border-collapse:collapse;min-width:320px;border:1px solid rgba(0,0,0,.10);border-radius:10px;overflow:hidden;"><thead><tr><th style="text-align:left;padding:8px;background:#fff7f0;">Modello</th><th style="text-align:left;padding:8px;background:#fff7f0;">Peso</th><th style="text-align:left;padding:8px;background:#fff7f0;">Barra</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    }
+
+    return `${m.name}: peso ~<strong>${String(m.weightKg).replace('.',',')} kg</strong>, barra ~<strong>${m.barMm} mm</strong>. Uso consigliato: ${m.note}.`;
   }
 
-  const box = document.getElementById('ai-response-chainsaw');
-  const text = document.getElementById('ai-text-chainsaw');
-  if(text) text.innerText = r;
-  if(box) box.style.display = 'block';
-}
+  function render(htmlStr){
+    if(!out || !wrap) return;
+    out.innerHTML = htmlStr;
+    // force reflow
+    void out.offsetHeight;
+    wrap.style.display = 'block';
+  }
+
+  function ask(){
+    const q = qEl ? qEl.value : '';
+    const res = answer(q);
+    requestAnimationFrame(() => render(res));
+  }
+
+  function clearAll(){
+    if(qEl) qEl.value = '';
+    if(out) out.innerHTML = '';
+    if(wrap) wrap.style.display = 'none';
+  }
+
+  function bind(){
+    if(askBtn){
+      askBtn.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation(); ask();
+      }, true);
+    }
+    if(clearBtn){
+      clearBtn.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation(); clearAll();
+      }, true);
+    }
+    if(qEl){
+      qEl.addEventListener('click', function(e){ e.stopPropagation(); }, true);
+      qEl.addEventListener('keydown', function(e){
+        if((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
+          e.preventDefault(); ask();
+        }
+      }, true);
+    }
+    document.querySelectorAll('[data-ai-example]').forEach(btn => {
+      btn.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        if(qEl) qEl.value = btn.getAttribute('data-ai-example') || '';
+        ask();
+      }, true);
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
+
+  window.__toolAdvisorAsk = ask;
+})();
 </script>
