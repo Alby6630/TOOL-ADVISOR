@@ -833,34 +833,31 @@ li{ font-size: 15.6px; }
   <div class="vevor-box" style="background:linear-gradient(180deg,#fff7f0 0%, #ffffff 100%);border-left:6px solid #e65100;">
     <p style="margin-top:0;">
       Non sei sicuro quale motosega scegliere? Questo <strong>assistente advisor</strong> ti aiuta a chiarire i dubbi più comuni
-      <em>in base ai modelli presenti in questa pagina</em>.
+      <em>in base ai modelli presenti in questa pagina</em> (25cc, 40cc, 52cc, 58cc, 62cc).
     </p>
 
     <p style="margin:10px 0 6px 0;"><strong>Domande tipiche:</strong></p>
     <ul style="margin:0;padding-left:18px;">
       <li>Devo tagliare legna per il camino: meglio 40cc o 52cc?</li>
-      <li>Ho solo potature e rami piccoli: mi basta il 25cc?</li>
+      <li>Ho solo potature e qualche ramo secco: mi basta il 25cc?</li>
       <li>Rischio di prendere una motosega troppo pesante per il mio uso?</li>
-      <li>Che differenza pratica c’è tra 58cc e 62cc?</li>
+      <li>Che differenza reale c’è tra 58cc e 62cc?</li>
     </ul>
 
     <div style="margin-top:12px;">
       <label for="ai-question-chainsaw"><strong>Scrivi il tuo dubbio:</strong></label>
       <textarea id="ai-question-chainsaw" rows="3" style="width:100%;max-width:860px;" placeholder="Esempio: devo preparare legna per l’inverno, tronchi medi, uso ogni weekend…"></textarea>
       <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-        <button class="vevor-btn" type="button" id="ai-btn-chainsaw">Chiedi un consiglio</button>
+        <button class="vevor-btn" type="button" onclick="aiAdvisorChainsaw()">Chiedi un consiglio</button>
         <span class="vevor-cta-note" style="margin:0;">Risposte sintetiche e coerenti con questa guida.</span>
       </div>
-      <noscript>
-        <p style="margin-top:10px;color:#b71c1c;"><strong>Nota:</strong> per usare l’assistente serve JavaScript attivo.</p>
-      </noscript>
     </div>
 
     <div id="ai-response-chainsaw" style="display:none;margin-top:14px;">
       <strong>Consiglio:</strong>
-      <p id="ai-text-chainsaw" style="margin:8px 0 0 0;color:#1f2937;line-height:1.5;background:#ffffff;border:1px solid rgba(0,0,0,.08);padding:10px 12px;border-radius:12px;"></p>
+      <p id="ai-text-chainsaw" style="margin:8px 0 0 0;"></p>
       <p style="font-size:0.9em;opacity:.8;margin:8px 0 0 0;">
-        Nota: per specifiche complete e disponibilità aggiornata, usa sempre il pulsante “Vai alla scheda ufficiale”.
+        Nota: per specifiche complete, foto/video e disponibilità aggiornata, usa sempre il pulsante sotto al modello.
       </p>
     </div>
   </div>
@@ -1371,73 +1368,38 @@ li{ font-size: 15.6px; }
 </div>
 
 <script>
-(function(){
-  
 function aiAdvisorChainsaw(){
-  var qEl = document.getElementById('ai-question-chainsaw');
-  var qRaw = (qEl && typeof qEl.value === 'string') ? qEl.value : '';
-  var q = qRaw.toLowerCase().trim();
+  const qEl = document.getElementById('ai-question-chainsaw');
+  const q = (qEl && qEl.value ? qEl.value : '').toLowerCase();
+  let r = "In generale: potature leggere → 25cc; legna domestica e uso regolare → 40–52cc; lavori più impegnativi e tronchi grandi → 58–62cc. Scegli sempre anche in base a peso e frequenza d’uso.";
 
-  // Always return something visible
-  var r = "Indicazione rapida: potature leggere = 25cc; uso regolare per legna domestica = 40-52cc; tronchi piu grandi e lavori impegnativi = 58-62cc. Considera sempre anche il peso.";
+  const has = (w) => q.includes(w);
 
-  function has(w){ return q.indexOf(w) !== -1; }
+  // intent signals
+  const potatura = has('potatura') || has('rami') || has('ramo') || has('frutto') || has('ulivo');
+  const leggero = has('leggera') || has('leggero') || has('peso') || has('stanco') || has('stanc') || has('maneggevole');
+  const legna = has('legna') || has('camino') || has('stufa') || has('ceppi');
+  const tronchi = has('tronchi') || has('tronco') || has('diametro') || has('grosso') || has('grossi') || has('grandi');
+  const abbatt = has('abbatt') || has('alberi') || has('albero');
+  const raro = has('raro') || has('saltuar') || has('poco') || has('una volta') || has('ogni tanto');
 
-  var potatura = has('potatura') || has('rami') || has('ramo') || has('frutto') || has('ulivo');
-  var leggero = has('leggero') || has('leggera') || has('peso') || has('stanco') || has('stanc') || has('maneggevole');
-  var legna = has('legna') || has('camino') || has('stufa') || has('ceppi');
-  var tronchi = has('tronchi') || has('tronco') || has('diametro') || has('grosso') || has('grossi') || has('grandi');
-  var abbatt = has('abbatt') || has('alberi') || has('albero');
-  var raro = has('raro') || has('saltuar') || has('poco') || has('una volta') || has('ogni tanto');
-
-  if(q.length === 0){
-    r = "Scrivi due dettagli (es. 'potature' oppure 'legna per camino' + 'tronchi medi/grandi') e ti dico la cilindrata piu sensata.";
-  } else if(potatura && !tronchi && !abbatt){
-    r = "Se fai soprattutto potature e rami piccoli, il 25cc e la scelta piu sensata: piu leggero e meno faticoso. Salire di cilindrata qui spesso significa solo piu peso.";
-  } else if(legna && (!tronchi || has('medio') || has('medi'))){
-    r = "Per legna da camino/stufa (diametri medi) il miglior equilibrio di solito e 40cc o 52cc: 40cc se vuoi piu maneggevolezza, 52cc se prevedi uso piu frequente o legna piu dura.";
+  if(potatura && !tronchi && !abbatt){
+    r = "Se fai soprattutto potature e rami piccoli, il 25cc è la scelta più sensata: leggero, semplice e meno faticoso. Salire di cilindrata in questo caso spesso significa solo più peso.";
+  } else if(legna && (has('medio') || has('medi') || !tronchi) ){
+    r = "Per legna da camino/stufa (diametri medi) il miglior equilibrio di solito è 40cc o 52cc: la 40cc se vuoi più maneggevolezza, la 52cc se prevedi uso più frequente o legna più dura.";
   } else if((tronchi || abbatt) && !raro){
-    r = "Per tronchi medio/grandi o abbattimenti guarda 58cc o 62cc: piu coppia e continuita di taglio. Se temi il peso, spesso la 58cc e il compromesso migliore.";
+    r = "Se parli di tronchi medio/grandi o abbattimenti, guarda 58cc o 62cc: più coppia e continuità di taglio. Valuta però il peso: se non sei allenato, una 58cc può essere il compromesso migliore.";
   } else if(raro && (tronchi || abbatt)){
-    r = "Se l'uso e saltuario ma ogni tanto affronti tronchi piu grandi, valuta 52cc o 58cc: abbastanza potenza senza essere impegnative come una 62cc.";
+    r = "Se l’uso è saltuario ma ogni tanto affronti tronchi più grandi, valuta 52cc o 58cc: abbastanza potenza senza essere eccessivamente impegnative come una 62cc.";
   } else if(leggero && (tronchi || abbatt)){
-    r = "Se vuoi qualcosa di gestibile ma con un po di margine sui tronchi, la 52cc e spesso il punto di equilibrio: piu spinta della 40cc, ma meno impegnativa di 58-62cc.";
+    r = "Se vuoi qualcosa di gestibile ma temi che i tronchi siano impegnativi, la 52cc è spesso il punto di equilibrio: più spinta della 40cc, ma meno impegnativa delle 58–62cc.";
   } else if(leggero && !legna && !tronchi){
-    r = "Se la priorita e maneggevolezza (poco peso e poca fatica), resta su 25cc o 40cc: 25cc per lavori leggeri, 40cc se vuoi un po piu di margine.";
+    r = "Se la priorità è maneggevolezza (poco peso e poca fatica), resta su 25cc o 40cc in base a quanto spesso tagli: 25cc per lavori leggeri, 40cc se vuoi un po’ più di margine.";
   }
 
-  var box = document.getElementById('ai-response-chainsaw');
-  var text = document.getElementById('ai-text-chainsaw');
-  if(text) text.textContent = r;
+  const box = document.getElementById('ai-response-chainsaw');
+  const text = document.getElementById('ai-text-chainsaw');
+  if(text) text.innerText = r;
   if(box) box.style.display = 'block';
 }
-
-(function(){
-  function bind(){
-    var btn = document.getElementById('ai-btn-chainsaw');
-    var ta = document.getElementById('ai-question-chainsaw');
-    if(btn){
-      btn.addEventListener('click', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        aiAdvisorChainsaw();
-      });
-    }
-    if(ta){
-      ta.addEventListener('click', function(e){ e.stopPropagation(); });
-      ta.addEventListener('keydown', function(e){
-        if((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
-          e.preventDefault();
-          aiAdvisorChainsaw();
-        }
-      });
-    }
-  }
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', bind);
-  } else {
-    bind();
-  }
-})();
 </script>
-
