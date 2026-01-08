@@ -1,3 +1,12 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Guida motoseghe VEVOR + Consigliatore</title>
+</head>
+<body>
+
 <section style="max-width:1100px;margin:24px auto;background:#f7f8fa;padding:18px;border-radius:16px;">
   <style>
     /* Layout + mobile */
@@ -29,89 +38,520 @@
     .vevor-rec{border:2px solid #2e7d32;background:#eef6f0;padding:18px;border-radius:12px;}
     .vevor-rec h3{margin:0 0 10px 0;color:#2e7d32;}
 
-    /* -------- MINI CHAT AI (compatta) -------- */
-    .ai-wrap{margin-top:18px;}
-    .ai-mini{
-      border:1px solid #e6e6e6;background:#fff;border-radius:14px;
-      box-shadow:0 2px 10px rgba(0,0,0,0.05);
-      max-width:560px;
-      overflow:hidden;
-    }
-    .ai-head{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:10px 12px;
-      background:linear-gradient(90deg,#f2f7f3,#ffffff);
-      border-bottom:1px solid #eee;
-      gap:10px;
-    }
-    .ai-title{display:flex;align-items:center;gap:10px;font-weight:800;}
-    .ai-dot{width:10px;height:10px;border-radius:999px;background:#2e7d32;box-shadow:0 0 0 3px rgba(46,125,50,0.15);}
-    .ai-sub{font-size:12px;opacity:.8;font-weight:600;}
-    .ai-actions{display:flex;gap:8px;align-items:center;}
-    .ai-btn{
-      border:1px solid #e6e6e6;background:#fff;border-radius:10px;
-      padding:7px 10px;cursor:pointer;font-weight:700;
-    }
-    .ai-btn:hover{background:#fafafa;}
-    .ai-body{display:block;}
-    .ai-log{
-      height:185px;
-      overflow:auto;
-      padding:10px 12px;
-      background:#fcfcfc;
-    }
-    .ai-msg{margin:8px 0;display:flex;gap:8px;align-items:flex-start;}
-    .ai-bubble{
-      max-width:88%;
-      padding:9px 11px;border-radius:12px;
-      border:1px solid #eee;
-      line-height:1.35;
-      font-size:14px;
-      white-space:pre-wrap;
-    }
-    .ai-me .ai-bubble{background:#fff;border-color:#eaeaea;}
-    .ai-bot .ai-bubble{background:#eef6f0;border-color:#d7eadb;}
-    .ai-tag{
-      font-size:12px;font-weight:800;opacity:.8;margin-top:2px;min-width:46px;
-    }
-    .ai-input{
-      display:flex;gap:8px;align-items:center;
-      padding:10px 12px;border-top:1px solid #eee;background:#fff;
-    }
-    .ai-input input{
-      flex:1;border:1px solid #e6e6e6;border-radius:10px;
-      padding:10px 11px;font-size:14px;outline:none;
-    }
-    .ai-input input:focus{border-color:#2e7d32;box-shadow:0 0 0 3px rgba(46,125,50,0.12);}
-    .ai-send{
-      border:none;background:#2e7d32;color:#fff;
-      padding:10px 12px;border-radius:10px;font-weight:800;cursor:pointer;
-    }
-    .ai-send:hover{opacity:.92;}
-    .ai-hints{
-      padding:10px 12px;border-top:1px dashed #eee;background:#fff;
-      font-size:12.5px;opacity:.9;
-    }
-    .ai-chip{
-      display:inline-block;margin:6px 6px 0 0;
-      padding:6px 9px;border-radius:999px;
-      border:1px solid #e6e6e6;background:#fafafa;cursor:pointer;
-      font-weight:700;font-size:12px;
-    }
-    .ai-chip:hover{background:#f3f3f3;}
-    .ai-collapsed .ai-body{display:none;}
-    .ai-footnote{font-size:12px;opacity:.75;margin:8px 0 0 0;}
-
     @media (max-width: 900px){
       .vevor-wrap{flex-direction:column;}
       .vevor-side{position:relative;top:auto;}
       .vevor-row{flex-direction:column;}
       .vevor-media{max-width:100%;flex:0 0 auto;}
       .vevor-media img{max-width:260px;margin:6px auto 0 auto;}
-      .ai-mini{max-width:100%;}
-      .ai-log{height:175px;}
     }
-  </style>
+
+    /* ==============================
+       CONSIGLIATORE GUIDATO (SOLO SCELTE)
+       ============================== */
+    .advisor-fab{
+      position:fixed; right:18px; bottom:18px; z-index:9999;
+      display:flex; flex-direction:column; align-items:flex-end; gap:10px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .advisor-openbtn{
+      border:0; cursor:pointer;
+      background:#2e7d32; color:#fff; font-weight:800;
+      padding:12px 14px; border-radius:999px;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      display:flex; align-items:center; gap:10px;
+    }
+    .advisor-openbtn span{display:inline-block}
+    .advisor-panel{
+      width:min(380px, calc(100vw - 36px));
+      background:#fff; border:1px solid #e6e6e6;
+      border-radius:16px; overflow:hidden;
+      box-shadow:0 18px 55px rgba(0,0,0,.22);
+      display:none;
+    }
+    .advisor-head{
+      background:#f3f7f4;
+      border-bottom:1px solid #e6e6e6;
+      padding:12px 12px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .advisor-title{font-weight:900;font-size:14px;margin:0;}
+    .advisor-actions{display:flex; gap:8px;}
+    .advisor-mini{
+      border:1px solid #dcdcdc; background:#fff; cursor:pointer;
+      padding:7px 10px; border-radius:10px; font-weight:800; font-size:12px;
+    }
+    .advisor-mini:hover{opacity:.92}
+    .advisor-body{
+      max-height:55vh;
+      overflow:hidden;
+      padding:12px;
+      background:#fff;
+    }
+    .advisor-msg{
+      max-width:92%;
+      padding:10px 12px;
+      border-radius:14px;
+      margin:8px 0;
+      line-height:1.25;
+      font-size:13px;
+      border:1px solid #eee;
+    }
+    .advisor-msg.bot{background:#f7f8fa;}
+    .advisor-msg.user{
+      background:#eef6f0;
+      margin-left:auto;
+      border-color:#d9ecd9;
+      font-weight:700;
+    }
+    .advisor-chips{
+      display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 2px 0;
+    }
+    .advisor-chip{
+      border:1px solid #dcdcdc;
+      background:#fff;
+      cursor:pointer;
+      padding:8px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:12px;
+    }
+    .advisor-chip:hover{background:#f7f8fa}
+    .advisor-hint{font-size:11px; opacity:.75; margin:10px 0 0 0;}
+
+    /* mini-card risultato dentro chat */
+    .advisor-result{
+      border:1px solid #e6e6e6;
+      border-left:4px solid #2e7d32;
+      background:#fff;
+      border-radius:14px;
+      padding:12px;
+      margin:10px 0 6px 0;
+      box-shadow:0 8px 24px rgba(0,0,0,.08);
+    }
+    .advisor-result h4{margin:0 0 8px 0;font-size:13px;}
+    .advisor-result p{margin:0 0 10px 0;font-size:12px;opacity:.9;line-height:1.35;}
+    .advisor-result .row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .advisor-result .go{
+      display:inline-block;background:#e65100;color:#fff;
+      padding:9px 12px;border-radius:10px;text-decoration:none;font-weight:900;font-size:12px;
+    }
+    .advisor-result .go:hover{opacity:.92}
+    .advisor-result .alt{
+      border:1px solid #dcdcdc;background:#fff;color:#222;
+      padding:9px 12px;border-radius:10px;font-weight:900;font-size:12px;cursor:pointer;
+    }
+    .advisor-result .alt:hover{background:#f7f8fa}
+
+    /* evidenziazione card quando consigliata */
+    .vevor-card.is-focus{
+      outline:3px solid rgba(46,125,50,.45);
+      box-shadow:0 10px 30px rgba(46,125,50,.18);
+      transform:translateY(-1px);
+      transition:all .2s ease;
+    }
+  
+    /* CTA Consigliatore (sotto le card) */
+    .vevor-cta-box{
+      display:flex; gap:16px; align-items:center; justify-content:space-between;
+      background:linear-gradient(135deg, rgba(46,125,50,.12), rgba(230,81,0,.10));
+      border:1px solid rgba(0,0,0,.08);
+      border-left:6px solid #2e7d32;
+      border-radius:16px;
+      padding:16px 16px;
+      margin:14px 0 18px;
+    }
+    .vevor-cta-left{flex:1; min-width:240px;}
+    .vevor-cta-title{margin:0 0 6px; font-size:18px;}
+    .vevor-cta-sub{margin:0; opacity:.92; line-height:1.35;}
+    .vevor-cta-right{display:flex; flex-direction:column; align-items:flex-end; gap:8px;}
+    .vevor-cta-btn{
+      background:#2e7d32; color:#fff; border:0;
+      padding:10px 14px; border-radius:12px;
+      font-weight:700; cursor:pointer;
+      box-shadow:0 10px 18px rgba(0,0,0,.08);
+      transition:transform .12s ease, opacity .12s ease;
+      max-width:260px;
+    }
+    .vevor-cta-btn:hover{opacity:.95; transform:translateY(-1px);}
+    .vevor-cta-note{font-size:12px; opacity:.75; max-width:260px; text-align:right;}
+    @media (max-width: 680px){
+      .vevor-cta-box{flex-direction:column; align-items:flex-start;}
+      .vevor-cta-right{align-items:flex-start;}
+      .vevor-cta-note{text-align:left; max-width:none;}
+      .vevor-cta-btn{max-width:none; width:100%;}
+    }
+
+
+    /* ===== Consigliatore in pagina (override) ===== */
+    #advisorSpot .advisor-panel{
+      position:static !important;
+      width:100% !important;
+      max-width:100% !important;
+      right:auto !important; bottom:auto !important;
+      border-radius:16px !important;
+      margin:10px 0 18px !important;
+      box-shadow:0 14px 30px rgba(0,0,0,.10) !important;
+    }
+    #advisorSpot .advisor-header{
+      border-top-left-radius:16px;
+      border-top-right-radius:16px;
+    }
+    /* Evidenziazione verdastra quando si clicca il pulsante flottante */
+    .advisor-attention{
+      animation: advisorPulse 1.2s ease-out 0s 2;
+      border:1px solid rgba(46,125,50,.35) !important;
+    }
+    @keyframes advisorPulse{
+      0%   { box-shadow:0 0 0 0 rgba(46,125,50,.0), 0 14px 30px rgba(0,0,0,.10); }
+      35%  { box-shadow:0 0 0 10px rgba(46,125,50,.18), 0 16px 34px rgba(0,0,0,.12); }
+      70%  { box-shadow:0 0 0 18px rgba(46,125,50,.08), 0 16px 34px rgba(0,0,0,.12); }
+      100% { box-shadow:0 0 0 0 rgba(46,125,50,.0), 0 14px 30px rgba(0,0,0,.10); }
+    }
+
+
+    /* ===== Consigliatore: restyle premium ===== */
+    #advisorSpot .advisor-panel{
+      background: rgba(255,255,255,.92) !important;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0,0,0,.10) !important;
+    }
+    #advisorSpot .advisor-header{
+      background: linear-gradient(135deg, rgba(46,125,50,.15), rgba(230,81,0,.10));
+      border-bottom: 1px solid rgba(0,0,0,.08);
+    }
+    #advisorSpot .advisor-title{
+      font-size: 15px;
+      letter-spacing: .2px;
+    }
+    #advisorSpot .advisor-subtitle{
+      font-size: 12px;
+      opacity: .85;
+    }
+    #advisorSpot .advisor-body{
+      padding: 14px !important;
+      background: radial-gradient(1200px 320px at 10% 0%, rgba(46,125,50,.08), transparent 55%),
+                  radial-gradient(1200px 320px at 90% 0%, rgba(230,81,0,.06), transparent 55%);
+      border-bottom-left-radius:16px;
+      border-bottom-right-radius:16px;
+    }
+    #advisorSpot .advisor-msg{
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: 0 10px 18px rgba(0,0,0,.05);
+      border-radius: 14px;
+      line-height: 1.35;
+    }
+    #advisorSpot .advisor-msg.user{
+      background: linear-gradient(135deg, rgba(46,125,50,.14), rgba(46,125,50,.05));
+      border-color: rgba(46,125,50,.18);
+    }
+    #advisorSpot .advisor-msg.bot{
+      background: rgba(255,255,255,.92);
+    }
+    #advisorSpot .advisor-chips{
+      display:grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:10px !important;
+      margin-top:10px !important;
+    }
+    @media (max-width: 520px){
+      #advisorSpot .advisor-chips{ grid-template-columns: 1fr; }
+    }
+    #advisorSpot .advisor-chip{
+      background: rgba(255,255,255,.95);
+      border: 1px solid rgba(0,0,0,.10);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 700;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, opacity .12s ease;
+    }
+    #advisorSpot .advisor-chip:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 12px 18px rgba(0,0,0,.08);
+      border-color: rgba(46,125,50,.30);
+    }
+    #advisorSpot .advisor-chip:active{
+      transform: translateY(0px);
+      opacity: .92;
+    }
+    #advisorSpot .advisor-result{
+      border: 1px solid rgba(46,125,50,.20);
+      background: linear-gradient(135deg, rgba(46,125,50,.10), rgba(255,255,255,.95));
+      border-radius: 16px;
+      padding: 12px 12px;
+    }
+    #advisorSpot .advisor-result h4{
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+    #advisorSpot .advisor-result .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    #advisorSpot .advisor-result a.go{
+      background:#2e7d32;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:12px;
+      font-weight:800;
+      text-decoration:none;
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow: 0 12px 18px rgba(46,125,50,.14);
+      transition: transform .12s ease, opacity .12s ease;
+    }
+    #advisorSpot .advisor-result a.go:hover{ transform: translateY(-1px); opacity:.96; }
+    #advisorSpot .advisor-result button.alt{
+      background: rgba(255,255,255,.96);
+      border:1px solid rgba(0,0,0,.12);
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    /* Evidenziazione più chiara: bordi verdi + glow */
+    .advisor-attention{
+      border: 1px solid rgba(46,125,50,.35) !important;
+      box-shadow:
+        0 0 0 0 rgba(46,125,50,.0),
+        0 14px 30px rgba(0,0,0,.10) !important;
+      animation: advisorGlow 1.15s ease-out 0s 2;
+    }
+    @keyframes advisorGlow{
+      0%   { box-shadow: 0 0 0 0 rgba(46,125,50,.0), 0 14px 30px rgba(0,0,0,.10); }
+      35%  { box-shadow: 0 0 0 10px rgba(46,125,50,.18), 0 18px 36px rgba(0,0,0,.12); }
+      70%  { box-shadow: 0 0 0 16px rgba(46,125,50,.08), 0 18px 36px rgba(0,0,0,.12); }
+      100% { box-shadow: 0 0 0 0 rgba(46,125,50,.0), 0 14px 30px rgba(0,0,0,.10); }
+    }
+
+
+    /* ===== Upgrade estetica consigliatore (v2) ===== */
+    #advisorSpot .advisor-panel{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    #advisorSpot .advisor-header{ border-top-left-radius:18px; border-top-right-radius:18px; }
+    #advisorSpot .advisor-title{ font-weight:900; }
+    #advisorSpot .advisor-body{ padding:16px !important; }
+    #advisorSpot .advisor-msg{ font-size:14px; }
+    #advisorSpot .advisor-chip{
+      font-weight:800;
+      border-radius:14px;
+    }
+    /* CTA senza bottone */
+    .vevor-cta-box{ align-items:flex-start; }
+
+
+    /* Consigliatore sempre aperto */
+    #advisorSpot #advisorPanel{ display:block !important; }
+    #advisorSpot .advisor-close{ display:none !important; }
+    #advisorSpot .advisor-restart{ margin-top:10px; display:flex; justify-content:flex-end; }
+    #advisorSpot .advisor-restart-btn{
+      background:transparent; border:1px solid rgba(0,0,0,.14);
+      border-radius:999px; padding:8px 12px; cursor:pointer;
+      font-weight:800; opacity:.85;
+    }
+    #advisorSpot .advisor-restart-btn:hover{ opacity:1; border-color: rgba(46,125,50,.35); }
+
+
+    /* Reset (compare solo dopo prima risposta) */
+    #advisorSpot .advisor-resetbar{ margin-top:10px; display:flex; justify-content:flex-end; }
+    #advisorSpot .advisor-resetbtn{
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(0,0,0,.14);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 900;
+      cursor: pointer;
+      opacity: .9;
+      transition: transform .12s ease, opacity .12s ease, border-color .12s ease;
+    }
+    #advisorSpot .advisor-resetbtn:hover{ opacity:1; transform: translateY(-1px); border-color: rgba(46,125,50,.35); }
+
+
+    /* ===== Consigliatore: colori più vivi ===== */
+    #advisorSpot .advisor-panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(246,250,247,.92)) !important;
+      border: 1px solid rgba(46,125,50,.18) !important;
+    }
+    #advisorSpot .advisor-head{
+      background: linear-gradient(135deg, rgba(46,125,50,.22), rgba(230,81,0,.14));
+      border-bottom: 1px solid rgba(0,0,0,.08);
+      padding: 12px 14px;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+    }
+    #advisorSpot .advisor-title{
+      margin:0;
+      font-weight: 950;
+      font-size: 15.5px;
+      letter-spacing: .25px;
+      color:#0f2a13;
+      text-shadow: 0 1px 0 rgba(255,255,255,.6);
+    }
+    #advisorSpot .advisor-body{
+      background:
+        radial-gradient(900px 260px at 10% 0%, rgba(46,125,50,.11), transparent 55%),
+        radial-gradient(900px 260px at 90% 0%, rgba(230,81,0,.08), transparent 55%);
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+    }
+    #advisorSpot .advisor-chip{
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,248,.96));
+      border: 1px solid rgba(46,125,50,.18);
+    }
+    #advisorSpot .advisor-chip:hover{
+      border-color: rgba(46,125,50,.42);
+      box-shadow: 0 14px 22px rgba(46,125,50,.10);
+    }
+
+
+    /* ===== Consigliatore integrato (hero) ===== */
+    .advisor-hero{
+      margin: 14px 0 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(46,125,50,.18);
+      background: radial-gradient(1200px 340px at 10% 0%, rgba(46,125,50,.14), transparent 55%),
+                  radial-gradient(1200px 340px at 90% 0%, rgba(230,81,0,.10), transparent 55%),
+                  linear-gradient(180deg, rgba(255,255,255,.92), rgba(245,248,246,.92));
+      box-shadow: 0 18px 40px rgba(0,0,0,.08);
+      overflow:hidden;
+    }
+    .advisor-hero-head{
+      padding: 16px 16px 10px;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      background: linear-gradient(135deg, rgba(46,125,50,.18), rgba(255,255,255,.60));
+    }
+    .advisor-hero-title{
+      margin:0 0 6px;
+      font-size: 20px;
+      font-weight: 950;
+      letter-spacing: .2px;
+      color:#0f2a13;
+    }
+    .advisor-hero-sub{
+      margin:0;
+      font-size: 13.5px;
+      font-weight: 700;
+      opacity:.85;
+    }
+
+    /* advisor panel dentro hero: elimina margini esterni e integra */
+    #advisorSpot .advisor-panel{
+      margin: 0 !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+    #advisorSpot .advisor-head{
+      padding: 12px 16px;
+      background: transparent;
+      border: 0;
+    }
+    #advisorSpot .advisor-title{
+      font-size: 16px !important;
+      font-weight: 950 !important;
+      color:#0f2a13;
+    }
+    #advisorSpot .advisor-body{
+      padding: 14px 16px 16px !important;
+      background: transparent !important;
+    }
+    #advisorSpot .advisor-chips{
+      grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    }
+    @media (max-width: 520px){
+      #advisorSpot .advisor-chips{ grid-template-columns: 1fr !important; }
+    }
+    #advisorSpot .advisor-chip{
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,248,.96)) !important;
+      border: 1px solid rgba(46,125,50,.18) !important;
+      box-shadow: 0 10px 18px rgba(0,0,0,.05);
+    }
+    #advisorSpot .advisor-chip:hover{
+      border-color: rgba(46,125,50,.46) !important;
+      box-shadow: 0 14px 24px rgba(46,125,50,.10);
+    }
+
+
+    /* ===== Mini-card risultato consigliatore ===== */
+    #advisorSpot .advisor-mini-card{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      border:1px solid rgba(46,125,50,.22);
+      border-radius:16px;
+      background: linear-gradient(135deg, rgba(46,125,50,.10), rgba(255,255,255,.95));
+      padding:12px;
+      box-shadow: 0 14px 26px rgba(0,0,0,.08);
+      margin: 10px 0 10px;
+    }
+    #advisorSpot .advisor-mini-thumb{
+      width:86px; height:86px;
+      border-radius:14px;
+      overflow:hidden;
+      background: rgba(255,255,255,.9);
+      border:1px solid rgba(0,0,0,.08);
+      flex:0 0 auto;
+      display:flex; align-items:center; justify-content:center;
+    }
+    #advisorSpot .advisor-mini-thumb img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    #advisorSpot .advisor-mini-meta{flex:1; min-width:160px;}
+    #advisorSpot .advisor-mini-name{
+      font-weight: 950;
+      font-size: 15px;
+      margin: 0 0 4px;
+      color:#0f2a13;
+    }
+    #advisorSpot .advisor-mini-desc{
+      margin:0 0 10px;
+      font-size: 12.5px;
+      opacity:.85;
+      line-height:1.25;
+    }
+    #advisorSpot .advisor-mini-cta{
+      display:inline-block;
+      background:#2e7d32;
+      color:#fff;
+      text-decoration:none;
+      font-weight: 900;
+      padding:10px 12px;
+      border-radius:12px;
+      box-shadow: 0 12px 18px rgba(46,125,50,.16);
+      transition: transform .12s ease, opacity .12s ease;
+    }
+    #advisorSpot .advisor-mini-cta:hover{opacity:.96; transform: translateY(-1px);}
+
+
+    /* ===== Flatten risultato finale: un solo contenitore visivo ===== */
+    #advisorSpot .advisor-msg.bot{ background: transparent !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; }
+    #advisorSpot .advisor-result{
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    #advisorSpot .advisor-result h4{
+      display:none; /* evita titolo extra (resta il titolo principale del box sopra) */
+    }
+    #advisorSpot .advisor-result .row{ display:none; } /* nasconde eventuali righe extra (es. vai al modello) */
+    #advisorSpot .advisor-mini-card{ margin: 0 !important; }
+
+
+.hidden{display:none;}
+.vevor-rec{animation:badgePop .35s ease;}
+@keyframes badgePop{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+</style>
 
   <div class="vevor-wrap">
 
@@ -127,8 +567,9 @@
       </div>
 
       <!-- 25 CC CARD -->
-      <div class="vevor-card">
+      <div class="vevor-card" data-cc="25">
         <h2 id="25cc" class="vevor-h2">VEVOR 25 cc — leggera e maneggevole</h2>
+<div class="vevor-rec hidden"><h3>⭐ Modello consigliato</h3></div>
 
         <div class="vevor-row">
           <div class="vevor-media">
@@ -158,15 +599,16 @@
         <div class="vevor-procon">
           <ul>
             <li><strong>Potenza/peso:</strong> 1,2 cv – 4,2 kg</li>
-            <li><strong>Pro:</strong> Avviamento ,leggera e facile da gestire.</li>
-            <li><strong>Contro:</strong> Taglio max 25cm e potenza contenuta,non adatta a tronchi grossi o lavori intensivi.</li>
+            <li><strong>Pro:</strong> Avviamento, leggera e facile da gestire.</li>
+            <li><strong>Contro:</strong> Taglio max 25cm e potenza contenuta, non adatta a tronchi grossi o lavori intensivi.</li>
           </ul>
         </div>
       </div>
 
       <!-- 40 CC CARD -->
-      <div class="vevor-card">
+      <div class="vevor-card" data-cc="40">
         <h2 id="40cc" class="vevor-h2">VEVOR 40 cc — equilibrio tra peso e potenza</h2>
+<div class="vevor-rec hidden"><h3>⭐ Modello consigliato</h3></div>
 
         <div class="vevor-row">
           <div class="vevor-media">
@@ -184,7 +626,7 @@
                 mantenendo però un buon controllo e un peso ancora gestibile. È indicata per un utilizzo domestico regolare, quando i lavori iniziano a essere più frequenti
                 ma non ancora estremamente impegnativi.
               </p>
-              <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> taglio di legna da ardere di diametro medio, abbattimento di piccoli alberi, manutenzione di giardini di medie dimensioni, lavori periodici su legname non troppo spesso.</p>
+              <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> taglio di legna da ardere di diametro medio, abbattimento di piccoli alberi, manutenzione di giardini di medie dimensioni.</p>
             </div>
 
             <p style="margin:12px 0 0 0;">
@@ -196,15 +638,16 @@
         <div class="vevor-procon">
           <ul>
             <li><strong>Potenza/peso:</strong> 1,8 cv – 5,6 kg</li>
-            <li><strong>Pro:</strong>Avviamento,taglio max 30cm,versatile,gestibile.</li>
-            <li><strong>Contro:</strong> non adatta a tronchi grossi .</li>
+            <li><strong>Pro:</strong> Avviamento, taglio max 30cm, versatile, gestibile.</li>
+            <li><strong>Contro:</strong> non adatta a tronchi grossi.</li>
           </ul>
         </div>
       </div>
 
       <!-- 52 CC CARD -->
-      <div class="vevor-card">
+      <div class="vevor-card" data-cc="52">
         <h2 id="52cc" class="vevor-h2">VEVOR 52 cc — per lavori frequenti</h2>
+<div class="vevor-rec hidden"><h3>⭐ Modello consigliato</h3></div>
 
         <div class="vevor-row">
           <div class="vevor-media">
@@ -221,7 +664,7 @@
                 Questo modello è pensato per chi utilizza la motosega con una certa frequenza e ha bisogno di maggiore coppia e continuità di taglio.
                 La 52 cc garantisce prestazioni solide anche sotto sforzo, risultando adatta a lavori prolungati e a un utilizzo più intenso rispetto ai modelli domestici leggeri.
               </p>
-              <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> taglio regolare di legna da ardere, abbattimento di alberi di medie dimensioni, manutenzione di terreni ampi, lavori stagionali ripetuti nel tempo.</p>
+              <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> taglio regolare di legna da ardere, abbattimento di alberi di medie dimensioni, manutenzione di terreni ampi.</p>
             </div>
 
             <p style="margin:12px 0 0 0;">
@@ -233,23 +676,16 @@
         <div class="vevor-procon">
           <ul>
             <li><strong>Potenza/peso:</strong> 2,4 cv – 6,8 kg</li>
-            <li><strong>Pro:</strong> Taglio max 43cm,per un uso più frequente rispetto alla 40cc.</li>
+            <li><strong>Pro:</strong> Taglio max 43cm, per un uso più frequente rispetto alla 40cc.</li>
             <li><strong>Contro:</strong> non adatta per tronchi grossi.</li>
           </ul>
-        </div>
-
-        <div class="vevor-rec" style="margin-top:12px;">
-          <h3>⭐ Modello consigliato</h3>
-          <p style="margin:0;">
-            Se sei indeciso e cerchi una motosega versatile per la maggior parte dei lavori domestici e rurali, la <strong>VEVOR 52 cc</strong> è la scelta più equilibrata:
-            buona potenza, ottima resa su legna media e un peso ancora gestibile.
-          </p>
         </div>
       </div>
 
       <!-- 58 CC CARD -->
-      <div class="vevor-card">
+      <div class="vevor-card" data-cc="58">
         <h2 id="58cc" class="vevor-h2">VEVOR 58 cc — potenza e controllo</h2>
+<div class="vevor-rec hidden"><h3>⭐ Modello consigliato</h3></div>
 
         <div class="vevor-row">
           <div class="vevor-media">
@@ -266,7 +702,7 @@
                 La motosega da 58 cc è una soluzione intermedia per chi cerca potenza elevata senza arrivare all’ingombro e al peso delle cilindrate più estreme.
                 Offre una buona riserva di forza e una maggiore capacità di taglio, restando comunque più gestibile rispetto ai modelli top di gamma.
               </p>
-              <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> taglio di tronchi di medio-grande diametro, lavori frequenti su legna robusta, manutenzione di aree verdi estese, utilizzo intensivo ma non professionale continuativo.</p>
+              <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> taglio di tronchi di medio-grande diametro, lavori frequenti su legna robusta, manutenzione di aree verdi estese.</p>
             </div>
 
             <p style="margin:12px 0 0 0;">
@@ -277,16 +713,17 @@
 
         <div class="vevor-procon">
           <ul>
-            <li><strong>Potenza/peso:</strong> 2,7cv - 7 KG</li>
-            <li><strong>Pro:</strong> Taglio max 45cm,potente e affidabile.</li>
-            <li><strong>Contro:</strong> Più ingombrante,può essere pesante per lunghi lavori di potatura. </li>
+            <li><strong>Potenza/peso:</strong> 2,7cv – 7 kg</li>
+            <li><strong>Pro:</strong> Taglio max 45cm, potente e affidabile.</li>
+            <li><strong>Contro:</strong> Più ingombrante, può essere pesante per lunghi lavori di potatura.</li>
           </ul>
         </div>
       </div>
 
       <!-- 62 CC CARD -->
-      <div class="vevor-card">
+      <div class="vevor-card" data-cc="62">
         <h2 id="62cc" class="vevor-h2">VEVOR 62 cc — massima potenza</h2>
+<div class="vevor-rec hidden"><h3>⭐ Modello consigliato</h3></div>
 
         <div class="vevor-row">
           <div class="vevor-media">
@@ -301,10 +738,9 @@
             <div class="vevor-box">
               <p>
                 La 62 cc è il modello più potente della gamma ed è progettata per affrontare lavori impegnativi senza compromessi. È indicata quando serve potenza costante,
-                profondità di taglio e resistenza durante sessioni di lavoro prolungate. Questa motosega richiede una minima esperienza, ma ripaga con prestazioni elevate anche
-                nelle condizioni più difficili.
+                profondità di taglio e resistenza durante sessioni di lavoro prolungate.
               </p>
-              <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> abbattimento di alberi di grande diametro, taglio di tronchi spessi, preparazione intensiva di legna da ardere, lavori gravosi su terreni boschivi o rurali.</p>
+              <p style="margin-bottom:0;"><strong>Esempi di utilizzo:</strong> abbattimento di alberi di grande diametro, taglio di tronchi spessi, preparazione intensiva di legna da ardere.</p>
             </div>
 
             <p style="margin:12px 0 0 0;">
@@ -315,12 +751,25 @@
 
         <div class="vevor-procon">
           <ul>
-            <li><strong>Potenza/peso:</strong> 3,6cv - 8,2 kg</li>
-            <li><strong>Pro:</strong> Potenza elevata,barra da 20",taglio max 45cm,per lavori pesanti.</li>
-            <li><strong>Contro:</strong> Pesante,richiede forza e controllo,eccessiva per lavori leggeri o brevi sessioni.</li>
+            <li><strong>Potenza/peso:</strong> 3,6cv – 8,2 kg</li>
+            <li><strong>Pro:</strong> Potenza elevata, barra da 20", taglio max 45cm, per lavori pesanti.</li>
+            <li><strong>Contro:</strong> Pesante, richiede forza e controllo, eccessiva per lavori leggeri o brevi sessioni.</li>
           </ul>
         </div>
       </div>
+
+      
+      <!-- Consigliatore integrato -->
+      <section class="advisor-hero" aria-label="Consigliatore modello">
+        <div class="advisor-hero-head">
+          <h2 class="advisor-hero-title">Non sai quale modello scegliere?</h2>
+          <p class="advisor-hero-sub">Rispondi a 5 domande per scoprire il modello più adatto a te.</p>
+        </div>
+
+        <div id="advisorSpot"></div>
+      </section>
+
+
 
       <hr>
 
@@ -351,70 +800,14 @@
 
       <hr>
 
-      <!-- MINI CHAT AI -->
-      <div class="ai-wrap" id="aiChatBox">
-        <div class="ai-mini" id="aiMini">
-          <div class="ai-head">
-            <div>
-              <div class="ai-title">
-                <span class="ai-dot" aria-hidden="true"></span>
-                <span>Chat Motoseghe</span>
-              </div>
-              <div class="ai-sub">Risponde solo su questa pagina (VEVOR 25–62cc)</div>
-            </div>
-            <div class="ai-actions">
-              <button class="ai-btn" id="aiToggle" type="button" aria-expanded="true" title="Apri/chiudi">—</button>
-              <button class="ai-btn" id="aiClear" type="button" title="Pulisci chat">Pulisci</button>
-            </div>
-          </div>
-
-          <div class="ai-body">
-            <div class="ai-log" id="aiLog" role="log" aria-live="polite"></div>
-
-            <div class="ai-input">
-              <input id="aiInput" type="text" placeholder='Scrivi qui... (es: "potare ulivi", "tronchi 30cm", "quanto pesa la 62cc?")' autocomplete="off" />
-              <button class="ai-send" id="aiSend" type="button">Invia</button>
-            </div>
-
-            <div class="ai-hints">
-              Prova:
-              <span class="ai-chip" data-q="Ciao">Ciao</span>
-              <span class="ai-chip" data-q="Potare ulivi, cosa prendo?">Potare ulivi</span>
-              <span class="ai-chip" data-q="Devo tagliare tronchi da 30 cm">Tronchi 30cm</span>
-              <span class="ai-chip" data-q="Differenza tra 40cc e 52cc">40 vs 52</span>
-              <span class="ai-chip" data-q="Quanto pesa la 62cc?">Peso 62cc</span>
-              <span class="ai-chip" data-q="Come funziona questa chat?">Come funziona</span>
-
-              <p class="ai-footnote">
-                Nota: chat “locale” (JavaScript) compatibile con GitHub Pages/Hostinger. Nessuna API esterna: risponde usando solo i dati già presenti qui.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <hr>
-
-      <h2 class="vevor-h2">Perché fidarti di noi?</h2>
-
-      <ul>
-        <li>Testiamo e confrontiamo il miglior rapporto qualità/prezzo.</li>
-        <li>Ti aiutiamo a scegliere in base alle tue esigenze il prodotto più adatto.</li>
-        <li>Analizziamo pro e contro reali per ogni prodotto/modello.</li>
-        <li> Noi siamo affiliati a Vevor e ricaviamo una piccola percentuale da ogni vendita tramite il nostro blog,senza costi aggiuntivi per te!</li>
-        <li> Il nostro lavoro è indirizzare il cliente a fare l'acquisto giusto nel sito ufficiale Vevor.it!</li>
-      </ul>
-
-      <hr>
-
       <h2 class="vevor-h2">Come scegliere in un minuto</h2>
 
       <p>
-        <strong>25 cc → </strong>Se fai solo potature e cerchi leggerezza<br>
-        <strong>40 cc →</strong>Se tagli tronchi piccoli<br>
-        <strong>52 cc →</strong>Se tagli tronchi medio/piccoli <br>
-        <strong>58 cc →</strong>Se tagli tronchi medio/grandi + abbattimento alberi medio/grandi <br>
-        <strong>62 cc →</strong>Se tagli  Tronchi grandi + abbattimento alberi grandi.
+        <strong>25 cc → </strong>Solo potatura e leggerezza<br>
+        <strong>40 cc →</strong>Legna piccola / tronchi piccoli, uso domestico regolare<br>
+        <strong>52 cc →</strong>Legna media, uso frequente, scelta versatile <br>
+        <strong>58 cc →</strong>Tronchi medio/grandi e abbattimento medio <br>
+        <strong>62 cc →</strong>Tronchi grandi e abbattimento impegnativo
       </p>
 
       <hr>
@@ -425,317 +818,340 @@
       </em></p>
 
     </div>
+
+    <!-- Sidebar non necessaria per il bot -->
+    <div class="vevor-side" style="display:none;"></div>
+
+  </div>
+
+  <!-- ==============================
+       WIDGET BOT GUIDATO (SOLO SCELTE)
+       ============================== -->
+  <div class="advisor-fab" aria-live="polite">
+    <button class="advisor-openbtn" id="advisorOpen" type="button" aria-expanded="false" aria-controls="advisorPanel">
+      <span>💬</span><span>Consigliatore</span>
+    </button>
+
+    <div class="advisor-panel" id="advisorPanel" role="dialog" aria-label="Consigliatore motosega">
+      <div class="advisor-head">
+        <p class="advisor-title">Consigliatore rapido</p>
+        <div class="advisor-actions">
+</div>
+      </div>
+
+      <div class="advisor-body" id="advisorBody"></div>
+    </div>
   </div>
 
   <script>
-    (function(){
-      // --- Knowledge base (SOLO contenuti presenti in pagina) ---
-      const MODELS = {
-        "25": {
-          name: "VEVOR 25 cc",
-          power: "1,2 cv",
-          weight: "4,2 kg",
-          cut: "25 cm (taglio max indicato nei contro)",
-          bar: "—",
-          pro: "Avviamento, leggera e facile da gestire.",
-          con: "Taglio max 25cm e potenza contenuta, non adatta a tronchi grossi o lavori intensivi.",
-          use: "potatura, rami piccoli, legna sottile, lavori saltuari"
-        },
-        "40": {
-          name: "VEVOR 40 cc",
-          power: "1,8 cv",
-          weight: "5,6 kg",
-          cut: "30 cm (taglio max indicato nei pro)",
-          bar: "—",
-          pro: "Avviamento, taglio max 30cm, versatile, gestibile.",
-          con: "Non adatta a tronchi grossi.",
-          use: "legna media, piccoli alberi, uso domestico regolare"
-        },
-        "52": {
-          name: "VEVOR 52 cc",
-          power: "2,4 cv",
-          weight: "6,8 kg",
-          cut: "43 cm (taglio max indicato nei pro)",
-          bar: "—",
-          pro: "Taglio max 43cm, per uso più frequente rispetto alla 40cc.",
-          con: "Non adatta per tronchi grossi.",
-          use: "lavori frequenti, legna da ardere regolare, alberi medi"
-        },
-        "58": {
-          name: "VEVOR 58 cc",
-          power: "2,7 cv",
-          weight: "7 kg",
-          cut: "45 cm (taglio max indicato nei pro)",
-          bar: "—",
-          pro: "Taglio max 45cm, potente e affidabile.",
-          con: "Più ingombrante, può essere pesante per lunghi lavori di potatura.",
-          use: "tronchi medio-grandi, aree estese, intensivo non professionale continuativo"
-        },
-        "62": {
-          name: "VEVOR 62 cc",
-          power: "3,6 cv",
-          weight: "8,2 kg",
-          cut: "45 cm (taglio max indicato nei pro)",
-          bar: 'Barra da 20"',
-          pro: 'Potenza elevata, barra da 20", taglio max 45cm, per lavori pesanti.',
-          con: "Pesante, richiede forza e controllo, eccessiva per lavori leggeri o brevi sessioni.",
-          use: "tronchi grandi, abbattimento alberi grandi, lavori gravosi"
-        }
-      };
+(function(){
+  const openBtn = document.getElementById('advisorOpen');
+  const panel   = document.getElementById('advisorPanel');
+  const titleEl = panel ? panel.querySelector('.advisor-title') : null;
+const body = document.getElementById('advisorBody');
+  const spot = document.getElementById('advisorSpot');
+  const ctaBtn = document.getElementById('advisorCtaStart');
 
-      // Utility DOM
-      const $ = (id)=>document.getElementById(id);
-      const logEl = $("aiLog");
-      const inputEl = $("aiInput");
-      const sendBtn = $("aiSend");
-      const clearBtn = $("aiClear");
-      const toggleBtn = $("aiToggle");
-      const mini = $("aiMini");
+  if (spot && panel && panel.parentElement !== spot) spot.appendChild(panel);
 
-      function addMsg(who, text){
-        const row = document.createElement("div");
-        row.className = "ai-msg " + (who === "me" ? "ai-me" : "ai-bot");
-        const tag = document.createElement("div");
-        tag.className = "ai-tag";
-        tag.textContent = (who === "me" ? "Tu" : "AI");
+  const state = { lavoro:null, diametro:null, essenza:null, uso:null, hasInteracted:false };
 
-        const bubble = document.createElement("div");
-        bubble.className = "ai-bubble";
-        bubble.textContent = text;
+  function esc(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
 
-        row.appendChild(tag);
-        row.appendChild(bubble);
-        logEl.appendChild(row);
-        logEl.scrollTop = logEl.scrollHeight;
-      }
+  function showPanel(){ if(panel) panel.style.display = 'block'; if(openBtn) openBtn.setAttribute('aria-expanded','true'); }
+  function attentionPulse(){
+    if(!panel) return;
+    panel.classList.remove('advisor-attention');
+    void panel.offsetWidth;
+    panel.classList.add('advisor-attention');
+  }
+  function scrollToPanel(withPulse=true){
+    showPanel();
+    if(!panel) return;
+    const rect = panel.getBoundingClientRect();
+    const panelTop = rect.top + window.pageYOffset;
+    const target = Math.max(0, panelTop - (window.innerHeight * 0.35));
+    window.scrollTo({ top: target, behavior: 'smooth' });
+    if(withPulse) setTimeout(attentionPulse, 420);
+  }
 
-      function norm(s){
-        return (s || "")
-          .toLowerCase()
-          .replace(/[^\p{L}\p{N}\s]/gu, " ")
-          .replace(/\s+/g, " ")
-          .trim();
-      }
+  function clearFocus(){
+    document.querySelectorAll('.vevor-card.is-focus').forEach(el => el.classList.remove('is-focus'));
+  }
+  function focusModel(cc){
+    clearFocus();
+    const card = document.querySelector('.vevor-card[data-cc="'+cc+'"]');
+    const anchor = document.getElementById(cc+'cc');
+    if(card) card.classList.add('is-focus');
+    if(anchor) anchor.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  function getModelLink(cc){
+    const card = document.querySelector('.vevor-card[data-cc="'+cc+'"]');
+    const a = card ? card.querySelector('a.vevor-btn') : null;
+    return { href: a ? a.getAttribute('href') : '#', label: a ? (a.textContent || 'Vedi prezzo e disponibilità') : 'Vedi prezzo e disponibilità' };
+  }
 
-      function hasAny(q, arr){
-        return arr.some(k => q.includes(k));
-      }
+    function setHeader(text){
+    if(titleEl) titleEl.innerHTML = text;
+  }
 
-      function extractCC(q){
-        const m = q.match(/\b(25|40|52|58|62)\s*(cc)?\b/i);
-        return m ? m[1] : null;
-      }
+  function isResultHtml(html){
+    return /advisor-result/.test(html) || /Consiglio finale/i.test(html);
+  }
 
-      // Estrae diametro in cm tipo: "30 cm", "30cm", "diametro 30"
-      function extractCm(q){
-        const m = q.match(/\b(\d{1,3})\s*(cm|centimetri)\b/i) || q.match(/\bdiametro\s*(\d{1,3})\b/i);
-        if (!m) return null;
-        const n = parseInt(m[1], 10);
-        if (Number.isFinite(n) && n > 0 && n < 200) return n;
-        return null;
-      }
+  // Render “a singolo turno”:
+  // - Domande: testo in alto (titolo), sotto solo scelta + opzioni (niente box domanda)
+  // - Risultato: titolo + contenuto in body
+  function renderTurn(selectedLabel, botHtml, chips){
+    if(!body) return;
+    body.innerHTML = '';
 
-      // Riconosce intenti con scoring semplice (più robusto di un if secco)
-      function scoreIntent(q, keywords){
-        let score = 0;
-        for (const k of keywords){
-          if (q.includes(k)) score += 1;
-        }
-        return score;
-      }
+    const resultMode = isResultHtml(botHtml);
 
-      function recommendByJob(q, cm){
-        // Potatura / ulivi / rami
-        const potaturaScore = scoreIntent(q, ["potatura","potare","rami","ulivo","ulivi","olivo","frutteto","frutto","siepe"]);
-        const legnaScore = scoreIntent(q, ["legna","camino","stufa","da ardere","spaccare","catasta"]);
-        const abbattScore = scoreIntent(q, ["abbatt","abbattere","alberi","bosco","pini","pino","quercia","castagno","tronchi grossi","grandi tronchi"]);
+    if(resultMode){
+      setHeader('');
+      const b = document.createElement('div');
+      b.className = 'advisor-msg bot';
+      b.innerHTML = botHtml;
+      body.appendChild(b);
+    } else {
+      // domanda: usa l'header
+      setHeader(botHtml);
+    }
 
-        // Se l'utente fornisce cm, usiamo soglie coerenti con "come scegliere in un minuto" + taglio max indicato
-        if (cm !== null){
-          if (cm <= 15) return "Con tronchi/rami fino a ~15cm: 25cc se vuoi leggerezza, oppure 40cc se vuoi un po’ più di spinta.";
-          if (cm <= 25) return "Con diametro intorno a 20–25cm: 40cc è un buon compromesso; se è un lavoro frequente, meglio 52cc.";
-          if (cm <= 35) return "Con diametro intorno a 30–35cm: 52cc (compromesso e consigliata nella pagina). Se è molto duro/frequente, valuta 58cc.";
-          if (cm <= 45) return "Con diametro fino a ~45cm: 58cc o 62cc. 62cc se lavori pesanti e frequenti, ma è più pesante.";
-          return "Se parliamo di diametri oltre ~45cm: nella pagina la più adatta è la 62cc (lavori pesanti), ma valuta attentamente peso e controllo.";
-        }
-
-        // Se non ci sono cm, ragioniamo per intent
-        if (abbattScore >= 2) return "Per abbattimento: 58cc su alberi medi/grandi; 62cc se lavori pesanti e tronchi grandi (ma più pesante).";
-        if (legnaScore >= 2) return "Per legna da ardere regolare: 52cc (modello consigliato). Se i tronchi sono spesso medio-grandi, 58cc.";
-        if (potaturaScore >= 2) return "Per potatura (anche ulivi): 25cc se vuoi super leggerezza; 40cc se vuoi più margine su rami più robusti.";
-        return null;
-      }
-
-      function modelInfoLine(cc){
-        const M = MODELS[cc];
-        if (!M) return null;
-        const extra = (cc === "62") ? ` | Barra: ${M.bar}` : "";
-        return `${M.name}: ${M.power} – ${M.weight} | Taglio max: ${M.cut}${extra}`;
-      }
-
-      function answerFor(qRaw){
-        const q = norm(qRaw);
-        const cc = extractCC(q);
-        const cm = extractCm(q);
-
-        // Saluti / small talk
-        if (hasAny(q, ["ciao", "salve", "buonasera", "buongiorno", "hey", "ehi"])){
-          return "Ciao! 😊 Cosa vuoi sapere sulle motoseghe di questa pagina? (es: potare ulivi, tronchi 30cm, peso/potenza/taglio max, differenze tra modelli)";
-        }
-        if (hasAny(q, ["grazie", "thx", "gentile", "top"])){
-          return "Figurati! Se mi dici che lavoro devi fare (potatura / legna / abbattimento) e il diametro indicativo, ti indirizzo al modello giusto.";
-        }
-        if (hasAny(q, ["chi sei", "cosa fai", "come funzioni", "come funziona"])){
-          return "Sono una mini-chat integrata nella pagina: rispondo usando solo le info presenti qui sopra (modelli 25/40/52/58/62cc, pro/contro, FAQ e scelta rapida). Premi INVIO per inviare 😉";
-        }
-
-        // Se chiedono prezzo, consumi, miscela ecc: NON inventiamo.
-        if (hasAny(q, ["prezzo", "costa", "costo", "offerta", "sconto"])){
-          return "Il prezzo può cambiare: per vedere prezzo aggiornato e disponibilità, clicca sul pulsante sotto al modello che ti interessa (vai alla pagina ufficiale VEVOR).";
-        }
-        if (hasAny(q, ["consumi", "consumo", "litri", "serbatoio", "miscela", "benzina", "olio miscela", "rumore", "db", "decibel"])){
-          return "Questi dati non sono indicati qui nella pagina. Se mi dici il modello (25/40/52/58/62cc), ti dico cosa posso da questa guida; per consumi/rumore/miscela conviene controllare la scheda ufficiale VEVOR cliccando sul pulsante del modello.";
-        }
-
-        // Sicurezza / manutenzione (consigli generici, non dati tecnici inventati)
-        if (hasAny(q, ["sicurezza", "dpi", "guanti", "casco", "visiera", "antitaglio"])){
-          return "Per sicurezza: usa DPI (guanti, occhiali/visiera, cuffie e pantaloni antitaglio se lavori spesso), lavora con presa stabile e non tagliare sopra le spalle. Se mi dici che lavoro fai, ti dico anche quale cilindrata ha più senso per evitare fatica inutile.";
-        }
-        if (hasAny(q, ["manutenzione", "catena", "affilare", "affilatura", "tensione catena", "pulizia"])){
-          return "Consiglio pratico: catena sempre ben tesa e affilata (taglia meglio e vibra meno), pulizia dopo l’uso e controlli regolari. Per i dettagli specifici del tuo modello, apri la pagina VEVOR dal pulsante e verifica le indicazioni ufficiali.";
-        }
-
-        // Confronti tra modelli (es: "40 vs 52")
-        const vs = q.match(/\b(25|40|52|58|62)\b.*\b(vs|contro|rispetto|differenza|meglio)\b.*\b(25|40|52|58|62)\b/);
-        if (vs){
-          const a = vs[1], b = vs[3];
-          const A = MODELS[a], B = MODELS[b];
-          return [
-            `Differenza ${A.name} vs ${B.name}:`,
-            `• Potenza/peso: ${a}cc = ${A.power}, ${A.weight} | ${b}cc = ${B.power}, ${B.weight}`,
-            `• Taglio max: ${a}cc ≈ ${A.cut} | ${b}cc ≈ ${B.cut}`,
-            `• Quando scegliere ${a}cc: ${A.use}`,
-            `• Quando scegliere ${b}cc: ${B.use}`
-          ].join("\n");
-        }
-
-        // Domande su peso/potenza/taglio/pro/contro di un modello specifico
-        if (cc && MODELS[cc]){
-          const M = MODELS[cc];
-
-          if (hasAny(q, ["pesa", "peso", "kg"])) return `${M.name}: peso indicato in pagina = ${M.weight}.`;
-          if (hasAny(q, ["potenza", "cv", "cavalli"])) return `${M.name}: potenza indicata in pagina = ${M.power}.`;
-          if (hasAny(q, ["taglio", "taglia", "diametro", "lunghezza", "max", "barra"])) {
-            const extra = (cc === "62") ? ` Inoltre: ${M.bar}.` : "";
-            return `${M.name}: taglio max indicato in pagina ≈ ${M.cut}.${extra}`;
-          }
-          if (hasAny(q, ["pro", "vantaggi", "pregi"])) return `${M.name} — Pro: ${M.pro}`;
-          if (hasAny(q, ["contro", "svantaggi", "difetti"])) return `${M.name} — Contro: ${M.con}`;
-          if (hasAny(q, ["per cosa", "uso", "utilizzo", "adatta", "consigliata"])) return `${M.name}: adatta per ${M.use}.`;
-
-          if (hasAny(q, ["info", "dettagli", "specifiche", "caratteristiche"])){
-            return [
-              `${M.name} — info rapide:`,
-              `• Potenza/peso: ${M.power} – ${M.weight}`,
-              `• Taglio max: ${M.cut}`,
-              (cc === "62" ? `• Barra: ${M.bar}` : ""),
-              `• Pro: ${M.pro}`,
-              `• Contro: ${M.con}`,
-              `• Ideale per: ${M.use}`
-            ].filter(Boolean).join("\n");
-          }
-        }
-
-        // Richieste "consiglio" + riconoscimento automatico (potatura/ulivi, tronchi cm, legna, abbattimento)
-        if (hasAny(q, ["quale mi consigli", "cosa mi consigli", "quale scegliere", "consigliami", "migliore", "che prendo", "che compro", "mi serve", "mi serve una motosega"]) || cm !== null){
-          const rec = recommendByJob(q, cm);
-          if (rec) return rec;
-
-          // fallback di consiglio
-          return "Dimmi 1 cosa sola e ti rispondo al volo:\n• potatura / legna / abbattimento\noppure\n• diametro medio (es: 20cm, 30cm, 40cm)\nIn base a questo ti dico quale tra 25/40/52/58/62cc ha più senso.";
-        }
-
-        // FAQ generali
-        if (hasAny(q, ["altre foto", "tutte le foto", "immagini", "foto del prodotto", "prezzo", "disponibilità", "scheda tecnica"])){
-          return "Per prezzo aggiornato, scheda tecnica completa e tutte le immagini: clicca sul pulsante sotto al modello che ti interessa e vai alla pagina ufficiale VEVOR.";
-        }
-        if (hasAny(q, ["più potente", "taglia sempre meglio", "sempre meglio"])){
-          return "No: la potenza va proporzionata al lavoro. Su tagli leggeri una cilindrata elevata non dà veri vantaggi e stanca di più (come scritto nella sezione errori comuni).";
-        }
-        if (hasAny(q, ["conta il peso", "importanza del peso", "perché peso"])){
-          return "Conta molto: più peso = più affaticamento, soprattutto in potatura o sessioni lunghe (FAQ).";
-        }
-        if (hasAny(q, ["uso domestico", "casa", "hobbista", "compromesso"])){
-          return "Per uso domestico intensivo il miglior compromesso, secondo la pagina, è 40cc o 52cc. Se vuoi un unico modello “tuttofare”, qui viene consigliata la 52cc.";
-        }
-
-        // Errori comuni
-        if (hasAny(q, ["errori", "sbagli", "sovradimensionata", "troppa potenza", "poca potenza"])){
-          return "Errori comuni: 1) troppa potenza = ti stanchi senza vantaggi nei lavori leggeri; 2) poca potenza su tronchi grandi = vibrazioni/fatica/tagli imprecisi; 3) guardare solo il prezzo = perdi efficienza nel tempo.";
-        }
-
-        // Se scrivono solo un numero tipo "52" o "62"
-        if (!cc){
-          const justNum = q.match(/^\s*(25|40|52|58|62)\s*$/);
-          if (justNum){
-            const n = justNum[1];
-            const line = modelInfoLine(n);
-            return line ? line : "Dimmi il modello (25/40/52/58/62cc) e ti rispondo.";
-          }
-        }
-
-        // Fallback “intelligente”
-        return "Posso aiutarti! Scrivi una di queste:\n• \"potare ulivi\" / \"legna da ardere\" / \"abbattere alberi\"\n• \"tronchi 30cm\" (o altro diametro)\n• \"peso/potenza/taglio max 52cc\"";
-      }
-
-      function send(){
-        const text = (inputEl.value || "").trim();
-        if (!text) return;
-
-        addMsg("me", text);
-        inputEl.value = "";
-
-        const reply = answerFor(text);
-        addMsg("bot", reply);
-      }
-
-      // Eventi: click + INVIO
-      sendBtn.addEventListener("click", send);
-      inputEl.addEventListener("keydown", function(e){
-        if (e.key === "Enter"){
-          e.preventDefault();
-          send();
-        }
+    if(chips && chips.length){
+      const wrap = document.createElement('div');
+      wrap.className = 'advisor-chips';
+      chips.forEach(c => {
+        const btn = document.createElement('button');
+        btn.className = 'advisor-chip';
+        btn.type = 'button';
+        btn.textContent = c.label;
+        btn.addEventListener('click', () => { state.hasInteracted = true; c.onClick(); });
+        wrap.appendChild(btn);
       });
+      body.appendChild(wrap);
+    }
 
-      // Chips
-      document.querySelectorAll(".ai-chip").forEach(chip=>{
-        chip.addEventListener("click", ()=>{
-          inputEl.value = chip.getAttribute("data-q") || "";
-          inputEl.focus();
-          send();
-        });
-      });
+    // Reset: compare solo dopo la prima interazione
+    if(state.hasInteracted){
+      const rwrap = document.createElement('div');
+      rwrap.className = 'advisor-resetbar';
+      const rbtn = document.createElement('button');
+      rbtn.type = 'button';
+      rbtn.className = 'advisor-resetbtn';
+      rbtn.textContent = 'Reset';
+      rbtn.addEventListener('click', () => { state.hasInteracted = false; start('Reset'); });
+      rwrap.appendChild(rbtn);
+      body.appendChild(rwrap);
+    }
+  }
 
-      // Pulisci
-      clearBtn.addEventListener("click", ()=>{
-        logEl.innerHTML = "";
-        boot();
-      });
+  function start(selected){
+    Object.assign(state, { lavoro:null, diametro:null, essenza:null, uso:null, hasInteracted:false });
+    showPanel();
+    qLavoro(selected || null);
+  }
 
-      // Collapse
-      toggleBtn.addEventListener("click", ()=>{
-        const collapsed = mini.classList.toggle("ai-collapsed");
-        toggleBtn.textContent = collapsed ? "+" : "—";
-        toggleBtn.setAttribute("aria-expanded", collapsed ? "false" : "true");
-      });
+  function qLavoro(selected){
+    renderTurn(selected,
+      '1/5 — Che tipo di lavoro devi fare principalmente?',
+      [
+        {label:'Solo potatura', onClick: () => { state.lavoro='potatura'; qDiametro('Solo potatura'); }},
+        {label:'Taglio legna misto', onClick: () => { state.lavoro='legna'; qDiametro('Taglio legna misto'); }},
+        {label:'Solo abbattimento alberi', onClick: () => { state.lavoro='abbattimento'; qDiametro('Solo abbattimento alberi'); }},
+        {label:'Un po’ di tutto', onClick: () => { state.lavoro='misto'; qDiametro('Un po’ di tutto'); }}
+      ]
+    );
+  }
 
-      function boot(){
-        addMsg("bot", "Ciao! 😊 Dimmi cosa devi fare e ti consiglio la cilindrata giusta tra 25/40/52/58/62cc.");
-        addMsg("bot", "Esempi: “potare ulivi”, “legna da ardere”, “abbattere alberi”, “tronchi 30cm”, “peso 62cc”, “40 vs 52”.");
+  function qDiametro(selected){
+    renderTurn(selected,
+      '2/5 — Qual è il diametro medio di ciò che tagli?',
+      [
+        {label:'Piccola (sotto i 10 cm)', onClick: () => { state.diametro='<10'; qEssenza('Piccola'); }},
+        {label:'Medio-Piccola (10–25 cm)', onClick: () => { state.diametro='10_25'; qEssenza('Medio-Piccola'); }},
+        {label:'Medio-Grande (25–40 cm)', onClick: () => { state.diametro='25_40'; qEssenza('Medio-Grande'); }},
+        {label:'Grande (oltre 40 cm)', onClick: () => { state.diametro='40plus'; qEssenza('Grande'); }},
+        {label:'Misto', onClick: () => { state.diametro='misto'; qEssenza('Misto'); }}
+      ]
+    );
+  }
+
+  function qEssenza(selected){
+    renderTurn(selected,
+      '3/5 — Che tipo di legna è principalmente?',
+      [
+        {label:'Morbida (Legna viva, pino, abete ecc.)', onClick: () => { state.essenza='morbida'; qUso('Morbida'); }},
+        {label:'Dura (Legna secca, quercia, castagno ecc.)', onClick: () => { state.essenza='dura'; qUso('Dura'); }},
+        {label:'Mista', onClick: () => { state.essenza='mista'; qUso('Mista'); }},
+        {label:'Non lo so ancora', onClick: () => { state.essenza='non_so'; qUso('Non lo so'); }}
+      ]
+    );
+  }
+
+  function qUso(selected){
+    renderTurn(selected,
+      '4/5 — Con che frequenza userai la motosega?',
+      [
+        {label:'Una volta l’anno', onClick: () => { state.uso='una_volta_anno'; qPriorita('Una volta l’anno'); }},
+        {label:'Pochi utilizzi all’anno', onClick: () => { state.uso='pochi_anno'; qPriorita('Pochi utilizzi all’anno'); }},
+        {label:'Uso frequente (stagionale)', onClick: () => { state.uso='frequente'; qPriorita('Uso frequente (stagionale)'); }},
+        {label:'Uso intenso', onClick: () => { state.uso='intenso'; qPriorita('Uso intenso'); }}
+      ]
+    );
+  }
+
+  function qPriorita(selected){
+    renderTurn(selected,
+      '5/5 — Cosa conta di più per te?',
+      [
+        {label:'Leggerezza e maneggevolezza', onClick: () => finalize('Leggerezza e maneggevolezza','leggerezza')},
+        {label:'Una via di mezzo', onClick: () => finalize('Una via di mezzo','equilibrio')},
+        {label:'Potenza', onClick: () => finalize('Potenza','potenza')}
+      ]
+    );
+  }
+
+  function recommend(priorita){
+    let cc = 52;
+    const lavoro = state.lavoro, d = state.diametro, e = state.essenza, u = state.uso, s = state.sessione;
+
+    if(lavoro === 'potatura'){
+      cc = (u === 'frequente' || u === 'intenso') ? 40 : 25;
+      if(d === '40plus') cc = 40;
+    }
+
+    if(lavoro === 'legna'){
+      if(d === '<10' || d === '10_25') cc = 40;
+      else if(d === '25_40') cc = 52;
+      else if(d === '40plus') cc = 62;
+      else cc = 52;
+
+      if(e === 'dura' && cc < 52) cc = 52;
+      if(e === 'dura' && d === '25_40') cc = 58;
+      if(e === 'dura' && d === '40plus') cc = 62;
+
+      if(u === 'una_volta_anno'){
+        if(cc === 62) cc = 58;
+        if(cc === 58 && d !== '40plus') cc = 52;
       }
+      if(u === 'intenso'){
+        if(cc === 40) cc = 52;
+        if(cc === 52 && (d === '25_40' || e === 'dura')) cc = 58;
+      }
+    }
 
-      boot();
-    })();
-  </script>
+    if(lavoro === 'abbattimento' || lavoro === 'misto'){
+      if(d === '<10' || d === '10_25') cc = 52;
+      else if(d === '25_40') cc = 58;
+      else if(d === '40plus') cc = 62;
+      else cc = 58;
+
+      if(u === 'una_volta_anno' && cc === 62) cc = 58;
+      if(u === 'intenso' && cc === 52) cc = 58;
+    }
+
+    if(priorita === 'leggerezza'){
+      if(cc === 62) cc = 58;
+      if(cc === 58 && lavoro === 'legna' && d !== '40plus') cc = 52;
+      if(lavoro === 'potatura' && (u === 'una_volta_anno' || u === 'pochi_anno')) cc = 25;
+    }
+
+    if(priorita === 'potenza'){
+      if(cc === 40 && (d === '25_40' || e === 'dura')) cc = 52;
+      if(cc === 52 && (lavoro === 'abbattimento' || lavoro === 'misto') && (u === 'frequente' || u === 'intenso')) cc = 58;
+      if(cc === 58 && d === '40plus') cc = 62;
+    }
+
+    return cc;
+  }
+
+  function prettyDiametro(val){
+    if(val === '<10') return '&lt; 10 cm';
+    if(val === '10_25') return '10–25 cm';
+    if(val === '25_40') return '25–40 cm';
+    if(val === '40plus') return '&gt; 40 cm';
+    return 'misto';
+  }
+
+  function reasonText(cc, priorita){
+    const parts = [];
+    const lavoroLabel = (state.lavoro === 'legna') ? 'taglio legna' : state.lavoro;
+    parts.push(lavoroLabel);
+    parts.push(`diametro ${prettyDiametro(state.diametro)}`);
+    parts.push(`frequenza ${String(state.uso).replaceAll('_',' ')}`);    parts.push(`priorità ${priorita}`);
+    if(state.essenza && state.essenza !== 'non_so') parts.push(`legna ${state.essenza}`);
+
+    let why = `Scelta consigliata in base alle tue esigenze.`;
+    if(cc === 25) why += 'Ottima per potatura e lavori leggeri, con massima maneggevolezza.';
+    if(cc === 40) why += 'Equilibrata e gestibile: adatta a legna piccola e lavori regolari senza appesantirti.';
+    if(cc === 52) why += 'Versatile: buona coppia e resa su legna media, adatta a uso frequente.';
+    if(cc === 58) why += 'Più potenza per tagli impegnativi e lavori più intensi, restando gestibile.';
+    if(cc === 62) why += 'Massima potenza per diametri grandi e lavori gravosi (più peso).';
+    return why;
+  }
+
+  function finalize(selected, priorita){
+    const cc = recommend(priorita);
+    const link = getModelLink(cc);
+    const why = reasonText(cc, priorita);
+
+    const card = document.querySelector('.vevor-card[data-cc="'+cc+'"]');
+    const img = card ? card.querySelector('img') : null;
+    const imgSrc = img ? (img.getAttribute('src') || '') : '';
+    const imgAlt = img ? (img.getAttribute('alt') || ('Motosega VEVOR '+cc+'cc')) : ('Motosega VEVOR '+cc+'cc');
+
+    const botHtml = `
+      <div class="advisor-result">
+        <h4>Consiglio finale: VEVOR ${cc} cc</h4>
+
+        <div class="advisor-mini-card">
+          <div class="advisor-mini-thumb">
+            ${imgSrc ? '<img src="' + esc(imgSrc) + '" alt="' + esc(imgAlt) + '">' : ''}
+          </div>
+          <div class="advisor-mini-meta">
+            <p class="advisor-mini-desc">${why}</p>
+            <a class="advisor-mini-cta" href="${esc(link.href)}" target="_blank" rel="nofollow sponsored noopener">
+              Vai al prodotto
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+
+    renderTurn(selected, botHtml, []);
+
+    // === Sposta badge "Modello consigliato" sulla card corretta ===
+    document.querySelectorAll('.vevor-rec').forEach(b=>b.classList.add('hidden'));
+    const target = document.querySelector('.vevor-card[data-cc="'+cc+'"]');
+    if(target){
+      const badge = target.querySelector('.vevor-rec');
+      if(badge) badge.classList.remove('hidden');
+      target.classList.add('is-focus');
+    }
+
+
+    const btn = document.getElementById('goModelBtn');
+    if(btn){
+      btn.addEventListener('click', () => {
+        renderTurn('Vai al modello nella pagina', `Fatto: ho evidenziato la <strong>${cc}cc</strong> nella pagina.`, []);
+      });
+    }
+  }
+
+  if(ctaBtn){
+    ctaBtn.addEventListener('click', () => { start(null); scrollToPanel(false); });
+  }
+  if(openBtn){
+    openBtn.addEventListener('click', () => { scrollToPanel(true); });
+  }
+
+  // sempre aperto: avvia subito
+  start(null);
+})();
+</script>
 </section>
+
+</body>
+</html>
