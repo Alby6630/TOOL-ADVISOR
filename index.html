@@ -551,6 +551,125 @@
   to{transform:scale(1);opacity:1}
 }
 
+
+/* ===== Badge "Modello consigliato" (migliorato) ===== */
+.vevor-rec{
+  border:1px solid rgba(46,125,50,.28);
+  background: linear-gradient(135deg, rgba(46,125,50,.14), rgba(255,255,255,.92));
+  padding:12px 12px;
+  border-radius:14px;
+  margin-top:10px;
+  box-shadow: 0 12px 26px rgba(46,125,50,.10);
+}
+.vevor-rec-top{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:950;
+  letter-spacing:.2px;
+  color:#0f2a13;
+}
+.vevor-rec-icon{
+  width:26px;height:26px;
+  border-radius:10px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(46,125,50,.16);
+  border: 1px solid rgba(46,125,50,.22);
+}
+.vevor-rec-title{
+  font-size:14px;
+}
+.vevor-rec-sub{
+  margin-top:6px;
+  font-size:12.5px;
+  font-weight:800;
+  opacity:.9;
+}
+
+/* ===== Evidenziazione card consigliata: sfondo verdino + bordo illuminato ===== */
+.vevor-card.is-focus{
+  background: linear-gradient(180deg, rgba(238,246,240,.92), rgba(255,255,255,.98));
+  border: 1px solid rgba(46,125,50,.38) !important;
+  box-shadow:
+    0 0 0 2px rgba(46,125,50,.22),
+    0 18px 46px rgba(46,125,50,.16),
+    0 10px 26px rgba(0,0,0,.06) !important;
+  transform: translateY(-1px);
+  transition: box-shadow .18s ease, transform .18s ease, background .18s ease, border-color .18s ease;
+}
+.vevor-card.is-focus::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:16px;
+  pointer-events:none;
+  box-shadow: 0 0 26px rgba(46,125,50,.22);
+  opacity:.85;
+}
+/* serve position relative per pseudo-element */
+.vevor-card{ position:relative; }
+
+
+/* ===== Badge "Modello consigliato" (testo unico + dinamico) ===== */
+.vevor-rec{
+  padding:10px 12px !important;
+}
+.vevor-rec-text{
+  display:block;
+  font-size:13px;
+  font-weight:950;
+  letter-spacing:.15px;
+  color:#0f2a13;
+}
+
+
+/* Nome modello nel risultato */
+.advisor-mini-name{
+  font-weight: 950;
+  font-size: 14.5px;
+  margin: 0 0 6px;
+  color:#0f2a13;
+}
+
+
+/* ===== Card consigliata: sfondo verdino più evidente ===== */
+.vevor-card.is-focus{
+  background: linear-gradient(
+    180deg,
+    rgba(226,242,231,.95),
+    rgba(255,255,255,.98)
+  ) !important;
+}
+
+
+/* ===== Card consigliata: verde più marcato ===== */
+.vevor-card.is-focus{
+  background: linear-gradient(
+    180deg,
+    rgba(210,235,220,.98),
+    rgba(245,252,248,.98)
+  ) !important;
+}
+
+/* ===== Badge: sfondo giallo evidenziato ===== */
+.vevor-rec{
+  background: linear-gradient(
+    180deg,
+    rgba(255,243,186,.95),
+    rgba(255,250,220,.95)
+  ) !important;
+  border:1px solid rgba(230,200,80,.65) !important;
+  box-shadow:
+    0 6px 18px rgba(230,200,80,.35),
+    0 2px 8px rgba(0,0,0,.06) !important;
+}
+
+.vevor-rec-text{
+  color:#5a4a00 !important;
+}
+
 </style>
 
   <div class="vevor-wrap">
@@ -569,7 +688,7 @@
       <!-- 25 CC CARD -->
       <div class="vevor-card" data-cc="25">
         <h2 id="25cc" class="vevor-h2">VEVOR 25 cc — leggera e maneggevole</h2>
-<div class="vevor-rec hidden"><h3>⭐ Modello consigliato</h3></div>
+<div class="vevor-rec hidden"><span class="vevor-rec-text">Modello consigliato in base alle tue esigenze</span></div>
 
         <div class="vevor-row">
           <div class="vevor-media">
@@ -608,7 +727,7 @@
       <!-- 40 CC CARD -->
       <div class="vevor-card" data-cc="40">
         <h2 id="40cc" class="vevor-h2">VEVOR 40 cc — equilibrio tra peso e potenza</h2>
-<div class="vevor-rec hidden"><h3>⭐ Modello consigliato</h3></div>
+<div class="vevor-rec hidden"><span class="vevor-rec-text">Modello consigliato in base alle tue esigenze</span></div>
 
         <div class="vevor-row">
           <div class="vevor-media">
@@ -647,7 +766,7 @@
       <!-- 52 CC CARD -->
       <div class="vevor-card" data-cc="52">
         <h2 id="52cc" class="vevor-h2">VEVOR 52 cc — per lavori frequenti</h2>
-<div class="vevor-rec hidden"><h3>⭐ Modello consigliato</h3></div>
+<div class="vevor-rec hidden"><span class="vevor-rec-text">Modello consigliato in base alle tue esigenze</span></div>
 
         <div class="vevor-row">
           <div class="vevor-media">
@@ -685,7 +804,7 @@
       <!-- 58 CC CARD -->
       <div class="vevor-card" data-cc="58">
         <h2 id="58cc" class="vevor-h2">VEVOR 58 cc — potenza e controllo</h2>
-<div class="vevor-rec hidden"><h3>⭐ Modello consigliato</h3></div>
+<div class="vevor-rec hidden"><span class="vevor-rec-text">Modello consigliato in base alle tue esigenze</span></div>
 
         <div class="vevor-row">
           <div class="vevor-media">
@@ -723,7 +842,7 @@
       <!-- 62 CC CARD -->
       <div class="vevor-card" data-cc="62">
         <h2 id="62cc" class="vevor-h2">VEVOR 62 cc — massima potenza</h2>
-<div class="vevor-rec hidden"><h3>⭐ Modello consigliato</h3></div>
+<div class="vevor-rec hidden"><span class="vevor-rec-text">Modello consigliato in base alle tue esigenze</span></div>
 
         <div class="vevor-row">
           <div class="vevor-media">
@@ -878,6 +997,10 @@ const body = document.getElementById('advisorBody');
   function clearFocus(){
     document.querySelectorAll('.vevor-card.is-focus').forEach(el => el.classList.remove('is-focus'));
   }
+
+  function hideBadges(){
+    document.querySelectorAll('.vevor-rec').forEach(b=>b.classList.add('hidden'));
+  }
   function focusModel(cc){
     clearFocus();
     const card = document.querySelector('.vevor-card[data-cc="'+cc+'"]');
@@ -949,6 +1072,8 @@ const body = document.getElementById('advisorBody');
 
   function start(selected){
     Object.assign(state, { lavoro:null, diametro:null, essenza:null, uso:null, hasInteracted:false });
+    clearFocus();
+    hideBadges();
     showPanel();
     qLavoro(selected || null);
   }
@@ -1102,6 +1227,9 @@ const body = document.getElementById('advisorBody');
     const imgSrc = img ? (img.getAttribute('src') || '') : '';
     const imgAlt = img ? (img.getAttribute('alt') || ('Motosega VEVOR '+cc+'cc')) : ('Motosega VEVOR '+cc+'cc');
 
+    const h2 = card ? card.querySelector('h2') : null;
+    const modelTitle = h2 ? (h2.textContent || '').trim() : ('VEVOR ' + cc + ' cc');
+
     const botHtml = `
       <div class="advisor-result">
         <h4>Consiglio finale: VEVOR ${cc} cc</h4>
@@ -1111,6 +1239,7 @@ const body = document.getElementById('advisorBody');
             ${imgSrc ? '<img src="' + esc(imgSrc) + '" alt="' + esc(imgAlt) + '">' : ''}
           </div>
           <div class="advisor-mini-meta">
+            <p class="advisor-mini-name">${esc(modelTitle)}</p>
             <p class="advisor-mini-desc">${why}</p>
             <a class="advisor-mini-cta" href="${esc(link.href)}" target="_blank" rel="nofollow sponsored noopener">
               Vai al prodotto
@@ -1122,12 +1251,30 @@ const body = document.getElementById('advisorBody');
 
     renderTurn(selected, botHtml, []);
 
-    // === Sposta badge "Modello consigliato" sulla card corretta ===
-    document.querySelectorAll('.vevor-rec').forEach(b=>b.classList.add('hidden'));
+    // === Sposta badge "Modello consigliato" sulla card corretta + testo dinamico ===
+    hideBadges();
     const target = document.querySelector('.vevor-card[data-cc="'+cc+'"]');
     if(target){
       const badge = target.querySelector('.vevor-rec');
-      if(badge) badge.classList.remove('hidden');
+      if(badge){
+        // testo dinamico (solo una riga)
+        let ideal = '';
+        if(cc === 25) ideal = 'ideale per potatura leggera e massima maneggevolezza';
+        if(cc === 40) ideal = 'ideale per legna piccola e uso domestico regolare';
+        if(cc === 52) ideal = 'ideale per legna media e uso frequente';
+        if(cc === 58) ideal = 'ideale per tagli impegnativi e legna dura';
+        if(cc === 62) ideal = 'ideale per diametri grandi e lavori gravosi';
+
+        // rifinitura in base alle scelte (senza diventare prolisso)
+        if(state.lavoro === 'potatura') ideal = 'ideale per potatura e lavori leggeri';
+        if(state.lavoro === 'abbattimento' && cc >= 58) ideal = 'ideale per abbattimento e lavori impegnativi';
+        if(priorita === 'leggerezza' && cc <= 52) ideal += ' (priorità leggerezza)';
+        if(priorita === 'potenza') ideal += ' (priorità potenza)';
+
+        const textEl = badge.querySelector('.vevor-rec-text');
+        if(textEl) textEl.textContent = 'Modello consigliato in base alle tue esigenze — ' + ideal;
+        badge.classList.remove('hidden');
+      }
       target.classList.add('is-focus');
     }
 
