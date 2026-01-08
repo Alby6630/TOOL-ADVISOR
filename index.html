@@ -670,6 +670,501 @@
   color:#5a4a00 !important;
 }
 
+
+/* === Consigliatore: centra testo delle domande === */
+#advisorSpot .advisor-head,
+#advisorSpot .advisor-title{
+  text-align:center;
+}
+
+#advisorSpot .advisor-title{
+  width:100%;
+}
+
+#advisorSpot .advisor-body > h3,
+#advisorSpot .advisor-body > p{
+  text-align:center;
+}
+
+#advisorSpot .advisor-msg.bot{
+  text-align:center;
+}
+
+#advisorSpot .advisor-chips{
+  justify-items:center;
+}
+
+#advisorSpot .advisor-chip{
+  text-align:center;
+}
+
+
+/* =========================
+   TYPOGRAPHY UPGRADE
+   ========================= */
+
+/* Google-like system stack (elegante, leggibile, professionale) */
+:root{
+  --font-main: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-title: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+body{
+  font-family: var(--font-main);
+  letter-spacing: 0.1px;
+}
+
+/* Titoli principali */
+h1, h2, h3{
+  font-family: var(--font-title);
+  letter-spacing: 0.3px;
+}
+
+h1{
+  font-size: 32px;
+  font-weight: 900;
+}
+
+h2{
+  font-size: 22px;
+  font-weight: 800;
+}
+
+h3{
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* Card titoli */
+.vevor-h2{
+  font-family: var(--font-title);
+  font-weight: 850;
+  letter-spacing: 0.25px;
+}
+
+/* Testi descrittivi */
+p, li{
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Pulsanti */
+.vevor-btn,
+.advisor-chip,
+.advisor-mini,
+.advisor-openbtn,
+.advisor-mini-cta,
+.advisor-cta-btn{
+  font-family: var(--font-title);
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+/* Consigliatore */
+#advisorSpot .advisor-title{
+  font-family: var(--font-title);
+  font-weight: 900;
+  letter-spacing: 0.4px;
+}
+
+#advisorSpot .advisor-msg,
+#advisorSpot .advisor-chip{
+  font-family: var(--font-main);
+  font-size: 14px;
+}
+
+/* FAQ */
+.faq-q{
+  font-family: var(--font-title);
+  font-weight: 800;
+}
+
+.faq-a-inner{
+  font-family: var(--font-main);
+  font-size: 14.5px;
+}
+
+/* Badge consigliato */
+.vevor-rec-text{
+  font-family: var(--font-title);
+  font-weight: 900;
+  letter-spacing: 0.3px;
+}
+
+/* Footer note */
+.vevor-note{
+  font-size: 13px;
+  letter-spacing: 0.2px;
+}
+
+/* Mobile tuning */
+@media(max-width:520px){
+  h1{ font-size: 26px; }
+  h2{ font-size: 20px; }
+  p, li{ font-size: 14.5px; }
+}
+
+
+
+/* ==================================================
+   FAQ ACCORDION — FIX ICON SIZE + PROFESSIONAL LOOK
+   ================================================== */
+.faq-wrap{
+  margin-top: 10px;
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 16px;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 14px 30px rgba(0,0,0,.06);
+  overflow: hidden;
+}
+.faq-item{
+  border-top: 1px solid rgba(0,0,0,.06);
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(250,251,252,.98));
+}
+.faq-item:first-child{ border-top: 0; }
+
+.faq-q{
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 14px 16px;
+  display:flex;
+  gap: 12px;
+  align-items:center;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 15px;
+  color: #111827;
+}
+.faq-q:hover{ background: rgba(46,125,50,.06); }
+
+.faq-q .left{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  min-width: 0;
+}
+.faq-dot{
+  width: 10px; height: 10px; border-radius: 999px;
+  background: rgba(46,125,50,.55);
+  box-shadow: 0 0 0 6px rgba(46,125,50,.10);
+  flex: 0 0 auto;
+}
+
+/* Icon container: FIXED size (prevents huge +) */
+.faq-icon{
+  width: 26px; height: 26px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.92);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex: 0 0 auto;
+  transition: transform 600ms ease, background 300ms ease, border-color 300ms ease;
+}
+/* Force svg to stay small */
+.faq-icon svg{
+  width: 14px !important;
+  height: 14px !important;
+  display:block;
+}
+.faq-icon path{ fill: rgba(17,24,39,.80); }
+
+.faq-a{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 700ms ease; /* apertura lenta */
+}
+.faq-a-inner{
+  padding: 0 16px 14px 36px;
+  color: #374151;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 500ms ease, transform 600ms ease;
+}
+.faq-item.is-open .faq-a-inner{
+  opacity: 1;
+  transform: translateY(0);
+}
+.faq-item.is-open .faq-icon{
+  transform: rotate(45deg);
+  background: rgba(46,125,50,.10);
+  border-color: rgba(46,125,50,.25);
+}
+
+/* (opzionale) se vuoi ancora le domande centrali, lascia queste regole */
+.faq-q{ position: relative; }
+.faq-q .left{ flex:1; justify-content:center; gap:0; }
+.faq-dot{ position:absolute; left:16px; top:50%; transform:translateY(-50%); }
+.faq-q .txt{ width:100%; text-align:center; padding:0 42px; }
+@media (max-width:520px){
+  .faq-q{ padding: 14px 14px; font-size: 14px; }
+  .faq-a-inner{ padding: 0 14px 14px 34px; }
+  .faq-dot{ left:14px; }
+  .faq-q .txt{ padding:0 40px; }
+  .faq-icon{ width:24px; height:24px; border-radius:9px; }
+  .faq-icon svg{ width:13px !important; height:13px !important; }
+}
+
+
+
+/* ==================================================
+   CONSIGLIATORE — UI UPGRADE (chips uniformi + ordinati)
+   ================================================== */
+
+/* contenitore consigliatore in pagina: ancora più premium */
+#adviserSpot, #advisorSpot {}
+
+/* layout chips: griglia ordinata */
+#advisorSpot .advisor-chips{
+  display:grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  margin-top: 14px !important;
+  align-items: stretch !important;
+}
+
+/* su schermi grandi: 3 colonne (più ordinato) */
+@media (min-width: 920px){
+  #advisorSpot .advisor-chips{
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+/* su mobile: 1 colonna */
+@media (max-width: 520px){
+  #advisorSpot .advisor-chips{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* pulsanti tutti uguali */
+#advisorSpot .advisor-chip{
+  width: 100% !important;
+  min-height: 52px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding: 12px 12px !important;
+  border-radius: 14px !important;
+  text-align:center !important;
+  line-height: 1.15 !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  letter-spacing: .25px !important;
+
+  border: 1px solid rgba(46,125,50,.22) !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,248,.96)) !important;
+  box-shadow: 0 10px 18px rgba(0,0,0,.06) !important;
+
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease, opacity .12s ease;
+}
+
+#advisorSpot .advisor-chip:hover{
+  transform: translateY(-1px) !important;
+  box-shadow: 0 16px 26px rgba(46,125,50,.12), 0 10px 22px rgba(0,0,0,.06) !important;
+  border-color: rgba(46,125,50,.46) !important;
+}
+
+/* stato pressed */
+#advisorSpot .advisor-chip:active{
+  transform: translateY(0px) scale(.99) !important;
+  opacity: .92 !important;
+}
+
+/* focus accessibile */
+#advisorSpot .advisor-chip:focus{
+  outline: none !important;
+}
+#advisorSpot .advisor-chip:focus-visible{
+  outline: 3px solid rgba(46,125,50,.35) !important;
+  outline-offset: 2px !important;
+}
+
+/* se i testi sono lunghi, non “sballano” altezza (wrap gestito) */
+#advisorSpot .advisor-chip{
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+/* header: più ordinato e centrato (già centrato, qui rifiniamo) */
+#advisorSpot .advisor-head{
+  padding: 14px 16px !important;
+}
+#advisorSpot .advisor-title{
+  font-size: 16px !important;
+}
+
+/* mini barra reset più bella (se esiste) */
+#advisorSpot .advisor-resetbar{
+  margin-top: 12px;
+  display:flex;
+  justify-content:center;
+}
+#advisorSpot .advisor-resetbtn{
+  border: 1px solid rgba(0,0,0,.12);
+  background: rgba(255,255,255,.92);
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-family: var(--font-title, system-ui);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 10px 18px rgba(0,0,0,.05);
+  transition: transform .12s ease, opacity .12s ease;
+}
+#advisorSpot .advisor-resetbtn:hover{opacity:.95; transform: translateY(-1px);}
+
+
+
+/* stato selezionato */
+#advisorSpot .advisor-chip.is-selected{
+  border-color: rgba(46,125,50,.70) !important;
+  background: linear-gradient(180deg, rgba(46,125,50,.14), rgba(255,255,255,.98)) !important;
+  box-shadow: 0 0 0 3px rgba(46,125,50,.20), 0 18px 30px rgba(46,125,50,.14) !important;
+}
+
+
+
+/* ==================================================
+   ERRORI COMUNI — tema "errore" (rosso soft, elegante)
+   ================================================== */
+#errorFaq{
+  border-color: rgba(220,38,38,.18) !important;
+  box-shadow: 0 14px 30px rgba(220,38,38,.06) !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,246,246,.92)) !important;
+}
+#errorFaq .faq-item{
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,248,248,.98)) !important;
+}
+#errorFaq .faq-q:hover{
+  background: rgba(220,38,38,.06) !important;
+}
+#errorFaq .faq-dot{
+  background: rgba(220,38,38,.62) !important;
+  box-shadow: 0 0 0 6px rgba(220,38,38,.10) !important;
+}
+#errorFaq .faq-icon{
+  border-color: rgba(220,38,38,.18) !important;
+}
+#errorFaq .faq-item.is-open .faq-icon{
+  background: rgba(220,38,38,.10) !important;
+  border-color: rgba(220,38,38,.25) !important;
+}
+
+/* CTA dentro micro-FAQ errori */
+.error-cta{
+  border:0;
+  background: linear-gradient(180deg, rgba(220,38,38,.92), rgba(185,28,28,.92));
+  color:#fff;
+  padding:10px 12px;
+  border-radius:12px;
+  font-family: var(--font-title, system-ui);
+  font-weight: 900;
+  letter-spacing:.25px;
+  cursor:pointer;
+  box-shadow: 0 12px 24px rgba(220,38,38,.18);
+  transition: transform .12s ease, opacity .12s ease, box-shadow .12s ease;
+}
+.error-cta:hover{
+  opacity:.96;
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(220,38,38,.22);
+}
+.error-cta:active{ transform: translateY(0px) scale(.99); opacity:.92; }
+.error-cta:focus{ outline:none; }
+.error-cta:focus-visible{ outline: 3px solid rgba(220,38,38,.28); outline-offset: 2px; }
+
+
+
+/* ==================================================
+   "Come scegliere in un minuto" — tabella rapida (premium)
+   ================================================== */
+.pick-table-wrap{
+  margin: 12px 0 6px;
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 14px 30px rgba(0,0,0,.06);
+}
+.pick-table{
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-main, system-ui);
+}
+.pick-table thead th{
+  text-align: left;
+  padding: 12px 14px;
+  font-family: var(--font-title, system-ui);
+  font-weight: 950;
+  font-size: 13px;
+  letter-spacing: .25px;
+  color: #0f172a;
+  background: linear-gradient(135deg, rgba(46,125,50,.14), rgba(230,81,0,.10));
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+.pick-table tbody td{
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.35;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(250,251,252,.98));
+  vertical-align: top;
+}
+.pick-table tbody tr:last-child td{ border-bottom: 0; }
+
+.pick-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width: 64px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-family: var(--font-title, system-ui);
+  font-weight: 950;
+  letter-spacing: .2px;
+  border: 1px solid rgba(46,125,50,.22);
+  background: rgba(46,125,50,.08);
+}
+.pick-badge{
+  display:inline-flex;
+  align-items:center;
+  margin-left: 8px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: .2px;
+  background: rgba(255,243,186,.95);
+  border: 1px solid rgba(230,200,80,.65);
+  color: #5a4a00;
+}
+.pick-best td{
+  background: radial-gradient(900px 240px at 10% 0%, rgba(46,125,50,.10), transparent 55%),
+              linear-gradient(180deg, rgba(255,255,255,.98), rgba(245,252,248,.98)) !important;
+}
+.pick-table tbody tr:hover td{
+  background: rgba(46,125,50,.06);
+}
+.pick-note{
+  margin: 0;
+  padding: 12px 14px;
+  font-size: 12.5px;
+  opacity: .9;
+  background: rgba(255,255,255,.92);
+}
+
+/* Responsive: tabella scorrevole su mobile */
+@media (max-width: 720px){
+  .pick-table-wrap{ overflow-x: auto; }
+  .pick-table{ min-width: 680px; }
+}
+
 </style>
 
   <div class="vevor-wrap">
@@ -892,44 +1387,207 @@
 
       <hr>
 
+      
       <h2 class="vevor-h2">Errori comuni nella scelta di una motosega</h2>
-      <div class="vevor-box">
-        <ul style="margin:0;">
-          <li><strong>Scegliere troppa potenza:</strong> una motosega sovradimensionata stanca di più e non migliora il risultato su lavori leggeri.</li>
-          <li><strong>Scegliere poca potenza:</strong> una cilindrata troppo bassa su tronchi grandi porta a vibrazioni, fatica e tagli imprecisi.</li>
-          <li><strong>Valutare solo il prezzo:</strong> risparmiare inizialmente può significare perdere tempo ed efficienza nel lungo periodo.</li>
-        </ul>
+
+      <div class="faq-wrap" id="errorFaq">
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="left">
+              <span class="faq-dot" aria-hidden="true"></span>
+              <span class="txt">Non valutare la lunghezza della barra</span>
+            </span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M11 5a1 1 0 0 1 2 0v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H5a1 1 0 1 1 0-2h6V5z"/></svg>
+            </span>
+          </button>
+          <div class="faq-a" aria-hidden="true">
+            <div class="faq-a-inner">
+              Una barra troppo lunga o troppo corta rispetto al lavoro da svolgere rende il taglio meno efficiente,
+              più faticoso e riduce il controllo della motosega.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="left">
+              <span class="faq-dot" aria-hidden="true"></span>
+              <span class="txt">Pensare che una sola motosega vada bene per tutto</span>
+            </span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M11 5a1 1 0 0 1 2 0v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H5a1 1 0 1 1 0-2h6V5z"/></svg>
+            </span>
+          </button>
+          <div class="faq-a" aria-hidden="true">
+            <div class="faq-a-inner">
+              Ogni cilindrata ha un utilizzo ideale: usare sempre lo stesso modello per lavori molto diversi
+              porta a prestazioni scarse e maggiore usura dell’attrezzo.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="left">
+              <span class="faq-dot" aria-hidden="true"></span>
+              <span class="txt">Sottovalutare la frequenza di utilizzo</span>
+            </span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M11 5a1 1 0 0 1 2 0v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H5a1 1 0 1 1 0-2h6V5z"/></svg>
+            </span>
+          </button>
+          <div class="faq-a" aria-hidden="true">
+            <div class="faq-a-inner">
+              Una motosega usata sporadicamente ha esigenze diverse rispetto a un utilizzo frequente:
+              scegliere senza considerare questo aspetto significa affaticarsi inutilmente o stressare la macchina.
+            </div>
+          </div>
+        </div>
+
       </div>
 
+
       <hr>
 
+
+      
+      <!-- =====================
+           FAQ (ACCORDION)
+           ===================== -->
       <h2 class="vevor-h2">Domande frequenti (FAQ)</h2>
 
-      <h3>Come posso vedere prezzo, informazioni complete e altre foto del prodotto?</h3>
-      <p>È sufficiente cliccare sul pulsante presente sotto ogni modello. Verrai reindirizzato alla pagina ufficiale VEVOR dove potrai consultare prezzo aggiornato, scheda tecnica completa e tutte le immagini del prodotto.</p>
+      <div class="faq-wrap" id="faqWrap">
 
-      <h3>Una motosega più potente taglia sempre meglio?</h3>
-      <p>No. La potenza deve essere proporzionata al tipo di lavoro: su tagli leggeri una cilindrata elevata non porta reali vantaggi.</p>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="left">
+              <span class="faq-dot" aria-hidden="true"></span>
+              <span class="txt">Come posso vedere prezzo, informazioni complete e altre foto del prodotto?</span>
+            </span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                <path d="M11 5a1 1 0 0 1 2 0v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H5a1 1 0 1 1 0-2h6V5z"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-a" aria-hidden="true">
+            <div class="faq-a-inner">
+              È sufficiente cliccare sul pulsante presente sotto ogni modello. Verrai reindirizzato alla pagina ufficiale VEVOR dove potrai consultare prezzo aggiornato, scheda tecnica completa e tutte le immagini del prodotto.
+            </div>
+          </div>
+        </div>
 
-      <h3>Quanto conta il peso della motosega?</h3>
-      <p>Molto. Un peso eccessivo affatica l’operatore, soprattutto durante sessioni prolungate o lavori di potatura.</p>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="left">
+              <span class="faq-dot" aria-hidden="true"></span>
+              <span class="txt">Una motosega più potente taglia sempre meglio?</span>
+            </span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                <path d="M11 5a1 1 0 0 1 2 0v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H5a1 1 0 1 1 0-2h6V5z"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-a" aria-hidden="true">
+            <div class="faq-a-inner">
+              No. La potenza deve essere proporzionata al tipo di lavoro: su tagli leggeri una cilindrata elevata non porta reali vantaggi.
+            </div>
+          </div>
+        </div>
 
-      <h3>Meglio una cilindrata media o alta per uso domestico?</h3>
-      <p>Per la maggior parte degli utilizzi domestici intensivi, una 40 o 52 cc rappresenta il miglior compromesso.</p>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="left">
+              <span class="faq-dot" aria-hidden="true"></span>
+              <span class="txt">Quanto conta il peso della motosega?</span>
+            </span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                <path d="M11 5a1 1 0 0 1 2 0v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H5a1 1 0 1 1 0-2h6V5z"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-a" aria-hidden="true">
+            <div class="faq-a-inner">
+              Molto. Un peso eccessivo affatica l’operatore, soprattutto durante sessioni prolungate o lavori di potatura.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="left">
+              <span class="faq-dot" aria-hidden="true"></span>
+              <span class="txt">Meglio una cilindrata media o alta per uso domestico?</span>
+            </span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                <path d="M11 5a1 1 0 0 1 2 0v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H5a1 1 0 1 1 0-2h6V5z"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-a" aria-hidden="true">
+            <div class="faq-a-inner">
+              Per la maggior parte degli utilizzi domestici intensivi, una 40 o 52 cc rappresenta il miglior compromesso.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
 
       <hr>
 
+      
       <h2 class="vevor-h2">Come scegliere in un minuto</h2>
 
-      <p>
-        <strong>25 cc → </strong>Solo potatura e leggerezza<br>
-        <strong>40 cc →</strong>Legna piccola / tronchi piccoli, uso domestico regolare<br>
-        <strong>52 cc →</strong>Legna media, uso frequente, scelta versatile <br>
-        <strong>58 cc →</strong>Tronchi medio/grandi e abbattimento medio <br>
-        <strong>62 cc →</strong>Tronchi grandi e abbattimento impegnativo
-      </p>
+      <div class="pick-table-wrap" role="region" aria-label="Tabella rapida per scegliere la motosega">
+        <table class="pick-table">
+          <thead>
+            <tr>
+              <th>Cilindrata</th>
+              <th>Ideale per</th>
+              <th>Quando sceglierla</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="pick-pill">25 cc</span></td>
+              <td>Potatura e lavori leggeri</td>
+              <td>Se vuoi massima leggerezza e tagli piccoli/saltuari</td>
+            </tr>
+            <tr>
+              <td><span class="pick-pill">40 cc</span></td>
+              <td>Legna piccola / tronchi piccoli</td>
+              <td>Uso domestico regolare, buon equilibrio tra peso e potenza</td>
+            </tr>
+            <tr class="pick-best">
+              <td><span class="pick-pill">52 cc</span> <span class="pick-badge">Più versatile</span></td>
+              <td>Legna media e uso frequente</td>
+              <td>Se vuoi una scelta “tuttofare” senza esagerare con peso/ingombro</td>
+            </tr>
+            <tr>
+              <td><span class="pick-pill">58 cc</span></td>
+              <td>Tronchi medio/grandi</td>
+              <td>Se tagli spesso legna dura o ti servono tagli più impegnativi</td>
+            </tr>
+            <tr>
+              <td><span class="pick-pill">62 cc</span></td>
+              <td>Tronchi grandi e abbattimento impegnativo</td>
+              <td>Se la priorità è la potenza (accettando più peso)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="pick-note">Suggerimento: se sei indeciso, usa il <strong>Consigliatore</strong> — in 5 domande ti porta al modello più adatto.</p>
+      </div>
+
 
       <hr>
+
 
       <p class="vevor-note"><em>
         Questo sito utilizza link di affiliazione. Acquistando tramite questi link potrei ricevere una commissione,
@@ -1300,5 +1958,170 @@ const body = document.getElementById('advisorBody');
 </script>
 </section>
 
+
+<script>
+/* =========================
+   Consigliatore: evidenzia scelta
+   ========================= */
+(function(){
+  const spot = document.getElementById('advisorSpot');
+  if(!spot) return;
+
+  spot.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.advisor-chip');
+    if(!btn) return;
+    // remove previous selection within current chips grid
+    spot.querySelectorAll('.advisor-chip.is-selected').forEach(b=>b.classList.remove('is-selected'));
+    btn.classList.add('is-selected');
+  });
+})();
+</script>
+
+
+<script>
+/* =========================
+   ACCORDION (FAQ + ERRORI)
+   ========================= */
+(function(){
+
+  function initAccordion(wrapId){
+    const wrap = document.getElementById(wrapId);
+    if(!wrap) return null;
+
+    const items = Array.from(wrap.querySelectorAll('.faq-item'));
+
+    function closeItem(item){
+      const btn = item.querySelector('.faq-q');
+      const panel = item.querySelector('.faq-a');
+      if(!btn || !panel) return;
+      item.classList.remove('is-open');
+      btn.setAttribute('aria-expanded','false');
+      panel.setAttribute('aria-hidden','true');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+      void panel.offsetHeight;
+      panel.style.maxHeight = '0px';
+    }
+
+    function openItem(item){
+      const btn = item.querySelector('.faq-q');
+      const panel = item.querySelector('.faq-a');
+      if(!btn || !panel) return;
+      item.classList.add('is-open');
+      btn.setAttribute('aria-expanded','true');
+      panel.setAttribute('aria-hidden','false');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+      panel.addEventListener('transitionend', function te(e){
+        if(e.propertyName === 'max-height'){
+          panel.style.maxHeight = 'none';
+          panel.removeEventListener('transitionend', te);
+        }
+      });
+    }
+
+    // init
+    items.forEach(it=>{
+      const panel = it.querySelector('.faq-a');
+      if(panel) panel.style.maxHeight = '0px';
+    });
+
+    items.forEach(item=>{
+      const btn = item.querySelector('.faq-q');
+      if(!btn) return;
+      btn.addEventListener('click', ()=>{
+        const isOpen = item.classList.contains('is-open');
+        items.forEach(i=>{ if(i!==item) closeItem(i); });
+        if(isOpen) closeItem(item);
+        else openItem(item);
+      });
+    });
+
+    window.addEventListener('resize', ()=>{
+      items.forEach(item=>{
+        if(!item.classList.contains('is-open')) return;
+        const panel = item.querySelector('.faq-a');
+        if(!panel) return;
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      });
+    });
+
+    return { wrap, items, openItem, closeItem };
+  }
+
+  const faq = initAccordion('faqWrap');
+  const err = initAccordion('errorFaq');
+
+  // CTA "Apri il Consigliatore"
+  const btn = document.getElementById('errorToAdvisor');
+  if(btn){
+    btn.addEventListener('click', ()=>{
+      const spot = document.getElementById('advisorSpot');
+      if(spot) spot.scrollIntoView({behavior:'smooth', block:'center'});
+
+      // pulse sul pannello del consigliatore (se presente)
+      setTimeout(()=>{
+        const panel = document.querySelector('#advisorSpot .advisor-panel');
+        if(panel){
+          panel.classList.remove('advisor-attention');
+          void panel.offsetWidth;
+          panel.classList.add('advisor-attention');
+        }
+      }, 450);
+    });
+  }
+
+  // Auto-apertura quando si arriva alla sezione "Errori comuni"
+  if(err && err.items && err.items.length){
+    const first = err.items[0];
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          // apri solo una volta
+          if(!err.wrap.dataset.autoOpened){
+            err.wrap.dataset.autoOpened = '1';
+            err.openItem(first);
+          }
+        }
+      });
+    }, { threshold: 0.35 });
+
+    io.observe(err.wrap);
+  }
+
+})();
+</script>
+
 </body>
 </html>
+
+<style>
+
+    /* === FAQ: centra il testo della domanda nel contenitore === */
+    .faq-q{
+      position: relative;
+      justify-content: space-between; /* testo al centro, icona a destra */
+    }
+    .faq-q .left{
+      flex: 1;
+      justify-content: center;  /* centra il blocco testo */
+      gap: 0;                   /* evita che il pallino sposti il centro */
+    }
+    /* sposto il pallino a sinistra "fuori" dal flusso, così non sposta il centro */
+    .faq-dot{
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    /* testo centrato */
+    .faq-q .txt{
+      width: 100%;
+      text-align: center;
+      padding: 0 42px; /* spazio per il pallino a sinistra e per l'icona a destra */
+    }
+    /* su mobile: padding leggermente diverso */
+    @media (max-width: 520px){
+      .faq-dot{ left: 14px; }
+      .faq-q .txt{ padding: 0 40px; }
+    }
+
+</style>
